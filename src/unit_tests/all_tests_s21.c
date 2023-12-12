@@ -5,12 +5,12 @@ int main(){
     Suite *s;
     SRunner *sr;
     Suite *s21_function_massive[] = {
-    strlen_suite(),
     memchr_suite(),
     memcmp_suite(),
     strchr_suite(),
-    strcmp_suite(),
+    strncmp_suite(),
     strpbrk_suite() , 
+    strcspn_suite(),
     0
     };
 

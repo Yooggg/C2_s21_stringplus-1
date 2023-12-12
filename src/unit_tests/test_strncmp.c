@@ -100,7 +100,7 @@ START_TEST(strcmp_10) {
 }
 END_TEST
 
-Suite *strcmp_suite(void) {
+Suite *strncmp_suite(void) {
     Suite *s = suite_create("SUITE_STRCMP");
     TCase *tc;
     tc = tcase_create("TC_STRCMP");

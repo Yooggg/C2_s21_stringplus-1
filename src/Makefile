@@ -6,7 +6,7 @@ CC=gcc
 STDFLAGS= -Wall -Werror -Wextra -std=c11
 GCOV_FLAGS= -fprofile-arcs -ftest-coverage
 UBUNTU_FLAGS= -lsubunit -lrt -lpthread -lm
-LIBS= -lcheck_subunit
+LIBS= -lcheck
 LDFLAGS= -L/usr/local/lib -I/usr/local/include
 
 # Определение операционной системы
@@ -21,7 +21,7 @@ ALL_C_SL=$(SRC)
 
 # Папка с тестовыми файлами
 TEST_C_DIR=./unit_tests/
-# Список тестовых файлов для s21_string
+# Список тестовых файлов для s21_string 
 TEST_SRC=$(wildcard $(TEST_C_DIR)/test_*.c)
 # Список всех тестовых файлов
 ALL_C_TEST=$(TEST_C_DIR)all_tests_s21.c $(TEST_SRC)
@@ -66,6 +66,6 @@ rebuild: clean all
 # Цель для очистки всех временных файлов и сгенерированных отчетов
 
 clean:
-	rm all_tests_s21 *.o *.a unit_tests/*.gc* unit_tests/*.info
+	rm -f all_tests_s21 *.o *.a *.gcno *.gcda unit_tests/*.gc* unit_tests/*.info
 	rm -rf test_report/
-
+	rm -f s21_*.gcda s21_*.gcno
