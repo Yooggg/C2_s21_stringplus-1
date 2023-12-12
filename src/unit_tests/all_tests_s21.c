@@ -21,6 +21,7 @@ for(int i = 0; s21_function_massive[i] != 0 ; i++){
     srunner_run_all(sr,CK_NORMAL);
     number_failed += srunner_ntests_failed(sr);
     srunner_free(sr);
+    printf("\n");
 }
   printf("========= FAILED: %d =========\n", number_failed);
 
