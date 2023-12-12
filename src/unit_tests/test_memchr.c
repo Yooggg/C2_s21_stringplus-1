@@ -64,11 +64,11 @@ START_TEST(memchr_8) {
 }
 END_TEST
 
-// Тест-кейс 9: Поиск символа, когда длина строки больше, чем реальное количество символов
+// Тест-кейс 9: Поиск символа, когда длина строки больше, чем реальное количество символов!!!
 START_TEST(memchr_9) {
     char test9[] = "Short";
     char search_char = 'T';
-    ck_assert_ptr_eq(s21_memchr(test9, search_char, 10), memchr(test9, search_char, 10));
+    ck_assert_ptr_eq(s21_memchr(test9, search_char, 6), memchr(test9, search_char, 6));
 }
 END_TEST
 

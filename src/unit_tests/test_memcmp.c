@@ -50,21 +50,21 @@ START_TEST(memcmp_5) {
 }
 END_TEST
 
-// Тест-кейс 6: Сравнение двух строк, где первая длиннее
+// Тест-кейс 6: Сравнение двух строк, где первая длиннее!!!
 START_TEST(memcmp_6) {
     char str1[] = "LongerString123";
     char str2[] = "Short123";
-    size_t n = 16;  // Сравниваем первые 16 байт
+    size_t n = 9;  // Сравниваем первые 9 байт
 
     ck_assert_int_eq(s21_memcmp(str1, str2, n), memcmp(str1, str2, n));
 }
 END_TEST
 
-// Тест-кейс 7: Сравнение двух строк, где вторая длиннее
+// Тест-кейс 7: Сравнение двух строк, где вторая длиннее !!!!
 START_TEST(memcmp_7) {
     char str1[] = "Short123";
     char str2[] = "LongerString123";
-    size_t n = 16;  // Сравниваем первые 16 байт
+    size_t n = 9;  // Сравниваем первые 9 байт
 
     ck_assert_int_eq(s21_memcmp(str1, str2, n), memcmp(str1, str2, n));
 }

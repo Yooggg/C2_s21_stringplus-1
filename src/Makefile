@@ -22,7 +22,7 @@ ALL_C_SL=$(SRC)
 # Папка с тестовыми файлами
 TEST_C_DIR=./unit_tests/
 # Список тестовых файлов для s21_string 
-TEST_SRC=$(wildcard $(TEST_C_DIR)/test_*.c)
+TEST_SRC=$(wildcard $(TEST_C_DIR)/test*.c)
 # Список всех тестовых файлов
 ALL_C_TEST=$(TEST_C_DIR)all_tests_s21.c $(TEST_SRC)
 

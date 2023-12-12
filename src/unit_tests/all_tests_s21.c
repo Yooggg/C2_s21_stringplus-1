@@ -11,6 +11,14 @@ int main(){
     strncmp_suite(),
     strpbrk_suite() , 
     strcspn_suite(),
+    strrchr_suite(),
+    strstr_suite(),
+    insert_suite(),
+    strlen_suite(),
+strncat_suite(),
+strncpy_suite(),
+to_lower_suite(),
+  to_upper_suite(),
     0
     };
 
