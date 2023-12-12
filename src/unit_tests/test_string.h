@@ -1,6 +1,6 @@
-#ifndef test_string.h
-#define test_string.h
-#include "../s21_string.h""
+#ifndef test_string_h
+#define test_string_h
+#include "../s21_string.h"
 #include <string.h>
 #include <check.h>
 
@@ -15,4 +15,4 @@ Suite *strpbrk_suite(void);
 
 
 
-#endif test_string.h
+#endif 

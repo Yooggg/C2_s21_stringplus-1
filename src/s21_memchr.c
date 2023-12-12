@@ -2,8 +2,8 @@
 
 void *s21_memchr (const void *str, int c, size_t n){
     void * res = NULL;
-    if (n> strlen(str)){
-        n=strlen(str)+1;
+    if (n> s21_strlen(str)){
+        n= s21_strlen(str)+1;
     }
     for (size_t i=0; i<n; i++){
         char to_char = *((char *) (str )+i);

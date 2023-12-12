@@ -1,11 +1,16 @@
 #include "s21_string.h"
 
 
-size_t s21_strcspn(const char *str1, const char *str2){
-    size_t size = 0;
-    while ((*str1!='\0') && (!s21_strchr(str2, (int)*str1))){
-        size+=1;
+char *s21_strpbrk(const char *str1, const char *str2){
+    char * res = NULL;
+    while (*str1!='\0' && !res){
+        res = s21_strchr( str2, (int)*str1);
         str1++;
     }
-    return size;
+    if (res){
+        str1--;
+        return (char *) str1;
+        
+    }
+    return NULL;
 }
