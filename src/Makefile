@@ -6,7 +6,7 @@ CC=gcc
 STDFLAGS= -Wall -Werror -Wextra -std=c11
 GCOV_FLAGS= -fprofile-arcs -ftest-coverage
 UBUNTU_FLAGS= -lsubunit -lrt -lpthread -lm
-LIBS= -lcheck
+LIBS= -lcheck_subunit
 LDFLAGS= -L/usr/local/lib -I/usr/local/include
 
 # Определение операционной системы
