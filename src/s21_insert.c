@@ -1,7 +1,7 @@
 #include "s21_string.h"
 #include <string.h>
 void *s21_insert(const char *src, const char *str, size_t start_index){
-    size_t length = strlen(src) + strlen(str) + 1;
+    size_t length = s21_strlen(src) + s21_strlen(str) + 1;
     char* product = (char*)malloc(length);
     if (start_index> s21_strlen(src)){
         return NULL;
