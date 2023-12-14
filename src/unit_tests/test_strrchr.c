@@ -82,15 +82,15 @@ START_TEST(strrchr_9) {
 END_TEST
 
 
-// Тест-кейс 10: Поиск последнего вхождения символа в строке (русский символ)
-START_TEST(strrchr_10) {
-    setlocale(LC_ALL, ""); // Устанавливаем локаль для корректной работы с широкими символами
-    const wchar_t str[] = L"Привет, мир!";
-    wint_t c = L'и';
+// Тест-кейс 10: Поиск последнего вхождения символа в строке (русский символ) NOT COMPARISON WITH ORIGINAL FUNCTION
+// START_TEST(strrchr_10) {
+//     setlocale(LC_ALL, ""); // Устанавливаем локаль для корректной работы с широкими символами
+//     const wchar_t str[] = L"Привет, мир!";
+//     wint_t c = L'и';
 
-    ck_assert_ptr_eq(s21_strrchr((const char *)str, c), wcsrchr(str, c));
-}
-END_TEST
+//     ck_assert_ptr_eq(s21_strrchr((const char *)str, c), wcsrchr(str, c));
+// }
+// END_TEST
 
 Suite *strrchr_suite(void) {
     Suite *s = suite_create("SUITE_STRRCHR");
@@ -105,7 +105,7 @@ Suite *strrchr_suite(void) {
     tcase_add_test(tc, strrchr_7);
     tcase_add_test(tc, strrchr_8);
     tcase_add_test(tc, strrchr_9);
-    tcase_add_test(tc, strrchr_10);
+    // tcase_add_test(tc, strrchr_10);
     suite_add_tcase(s, tc);
     return s;
 }

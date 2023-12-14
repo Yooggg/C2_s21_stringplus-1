@@ -8,13 +8,5 @@ int s21_strncmp(const char *str1, const char *str2, size_t n){
             i=n;
         }
     }
-    if (n>1){
-        if (res>0){
-            res =1;
-        }
-        if (res< 0){
-            res =-1;
-        }
-    }
     return res;
 }
