@@ -11,9 +11,7 @@ void *s21_insert(const char *src, const char *str, size_t start_index){
     strcat(product, str);
     strcat(product, src + start_index);
     strncpy((char *)src, product, length);
-    if (product){
-        free(product);
-    }
     
-    return (void *)src;
+    
+    return (void *)product;
 }
