@@ -1,0 +1,1 @@
+genhtml -o test_report ./unit_tests/all_tests_s21.info
