@@ -7,6 +7,19 @@
 #include <ctype.h>
 #include <stdint.h>
 
+long double ld_round(long double num, int precision) {
+    double mult = pow(10.0, precision);
+    double ret = round(num * mult) / mult;
+    return ret;
+}
+
+long double ld_pow(long double num, int precision){
+    for (int i = 0; i < precision; i++){
+        num /= 10;
+    }
+    return num;
+}
+
 int custom_itoa(char *str, long int value) {
     long int count = 0;
     long int temp = value;
@@ -97,12 +110,12 @@ int custom_ftoa(char *str, long double num, int precision) {
 
     *str++ = '.';
     count++;
-
+    num = ld_round(num,precision);
     long double fractionalPart = num - intPart; 
 
     for (int i = 0; i < precision; i++) {
         fractionalPart *= 10;
-        long int digit = (long int)(fractionalPart + 1.0 /(precision+1));
+        long int digit = (long int)(fractionalPart + ld_pow(1.0,precision));
         *str++ = '0' + digit;
         count++;
         fractionalPart -= digit;
@@ -121,14 +134,16 @@ int custom_etoa(char *str, long double num, int precision) {
         *str++ = '-';
         //count++; //возможно ошибка
     }
+
+    int exp_fl = num >=1 ? 1:0;
     long int intPart = (long int)num;
 
-    while (intPart >= 10 && num != 0 && !fl) {
+    while (intPart >= 10 && num != 0 && exp_fl) {
         intPart /= 10;
         num /= 10;
         exp_value++;
     }
-    while (num <= 1 && num != 0 && fl) {
+    while (num <= 1 && num != 0 && !exp_fl) {
         num *= 10;
         exp_value--;
     }
@@ -140,11 +155,12 @@ int custom_etoa(char *str, long double num, int precision) {
     *str++ = '.';
     count++;
 
+    num = ld_round(num,precision);
     long double fractionalPart = num - intPart;
 
     for (int i = 0; i < precision; i++) {
         fractionalPart *= 10;
-        long int digit = (long int)(fractionalPart + 1.0 /(precision+1));
+        long int digit = (long int)(fractionalPart + ld_pow(1.0,precision));
         *str++ = '0' + digit;
         count++;
         fractionalPart -= digit;
@@ -257,7 +273,6 @@ int custom_gftoa(char *str, long double num, int precision) {
 
 
 int d_sprintf(char *str, va_list args, int length_arr[3]) {
-
     long int value = va_arg(args, long int);
     char temp[20];
     int count = 0;
@@ -595,3 +610,32 @@ int s21_sprintf(char *str, char *format, ...) {
     return str - start;
 }
 
+int main() {
+    char buffer1[100], buffer2[100000], buffer3[100], buffer4[100], buffer5[100], buffer6[100],
+        buffer7[100], buffer8[100], buffer9[100], buffer10[100], buffer11[100], buffer12[100],
+        buffer13[100], buffer14[100], buffer15[100], buffer16[100];
+
+    int printed_chars_n = 0;
+    int printed_chars_p = 123;
+    int *ukaz = &printed_chars_p;
+    void *ptr = NULL;
+    double (*func_ptr)(double, double) = pow;
+    long double x = -123.456;
+    // int x = 5;
+
+    sprintf(buffer1, "%p\n",func_ptr);
+    printf("%s", buffer1);
+
+    s21_sprintf(buffer2, "%p\n",func_ptr);
+    printf("%s", buffer2);
+
+
+    // sprintf(buffer1, "%Le\n",x);
+    // printf("%s", buffer1);
+
+    // s21_sprintf(buffer2, "%Le\n",x);
+    // printf("%s", buffer2);
+
+
+    return 0;
+}

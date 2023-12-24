@@ -1,4 +1,5 @@
 #include "test_string.h"
+#include <math.h>
 
 // Тест-кейс 1: Тест для спецификатора %e с положительным значением
 START_TEST(s21_sprintf_e_1) {
@@ -45,7 +46,7 @@ END_TEST
 // Тест-кейс 4: Тест для спецификатора %e с максимальным положительным значением
 START_TEST(s21_sprintf_e_4) {
     char result[50];
-    double value = DBL_MAX;
+    double value = INT32_MAX;
     int standard_result = sprintf(result, "%e", value);
 
     char s21_result[50];

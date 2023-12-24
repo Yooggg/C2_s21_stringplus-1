@@ -1,4 +1,5 @@
 #include "test_string.h"
+#include <math.h>
 
 // Тест-кейс 1: Указатель на обычную переменную
 START_TEST(s21_sprintf_p_1) {
@@ -32,7 +33,7 @@ END_TEST
 // Тест-кейс 3: Указатель на функцию
 START_TEST(s21_sprintf_p_3) {
     char result[50];
-    int (*func_ptr)(int) = NULL;
+    double (*func_ptr)(double, double) = pow;
     int standard_result = sprintf(result, "%p", (void *)func_ptr);
 
     char s21_result[50];

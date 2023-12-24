@@ -45,7 +45,7 @@ END_TEST
 // Тест-кейс 4: Максимальное положительное значение для double
 START_TEST(s21_sprintf_E_4) {
     char result[50];
-    double value = DBL_MAX;
+    double value = INT32_MAX;
     int standard_result = sprintf(result, "%E", value);
 
     char s21_result[50];

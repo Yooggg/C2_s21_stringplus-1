@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 void *s21_memchr (const void *str, int c, size_t n);
 
