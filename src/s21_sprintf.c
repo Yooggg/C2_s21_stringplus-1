@@ -37,12 +37,14 @@ int custom_itoa(char *str, long int value) {
         length = (long int)log10(temp) + 1; 
     }
 
+
     if (is_negative) {
         str[count++] = '-';
     }
 
     for (int i = length - 1; i >= 0; i--) {
-        str[count++] = '0' + ((value < 0 ? -value : value) / (long int)pow(10, i)) % 10;
+        char tmp = '0' + ((value < 0 ? -value : value) / (long int)pow(10, i)) % 10;
+        str[count++] = tmp;
     }
 
     //str[count] = '\0';
@@ -272,9 +274,9 @@ int custom_gftoa(char *str, long double num, int precision) {
 }
 
 
-int d_sprintf(char *str, va_list args, int length_arr[3]) {
+int d_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     long int value = va_arg(args, long int);
-    char temp[20];
+    char temp[400] = {'0'};
     int count = 0;
     if (length_arr[1]){
         count = custom_itoa(temp, (long int)value);
@@ -283,65 +285,97 @@ int d_sprintf(char *str, va_list args, int length_arr[3]) {
     } else{
         count = custom_itoa(temp, (int)value);
     }
+
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
     strcpy(str, temp);
     return count;
 }
 
-int f_sprintf(char *str, va_list args, int length_arr[3]) {
+int f_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
+    char temp[400] = {'0'};
     int count = 0;
     if (length_arr[2]){
         long double value = va_arg(args, long double);
-        count = custom_ftoa(str, value, 6);
+        count = custom_ftoa(temp, value, 6);
     } else {
         double value = va_arg(args, double);
-        count = custom_ftoa(str, value, 6);
+        count = custom_ftoa(temp, value, 6);
     }
-
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
+    strcpy(str, temp);
     return count;
 }
 
-int g_sprintf(char *str, va_list args, int length_arr[3]) {
+int g_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
+    char temp[400] = {'0'};
     int count = 0;
     if (length_arr[2]){
         long double value = va_arg(args, long double);
-        if (fabsl(value) < 0.0001 || fabsl(value) >= 1.0e+6) count = custom_getoa(str, value, 5);
-        else count = custom_gftoa(str, value, 6);
+        if (fabsl(value) < 0.0001 || fabsl(value) >= 1.0e+6) count = custom_getoa(temp, value, 5);
+        else count = custom_gftoa(temp, value, 6);
     } else {
         double value = va_arg(args, double);
-        if (fabs(value) < 0.0001 || fabs(value) >= 1.0e+6) count = custom_getoa(str, value, 5);
-        else count = custom_gftoa(str, value, 6);
+        if (fabs(value) < 0.0001 || fabs(value) >= 1.0e+6) count = custom_getoa(temp, value, 5);
+        else count = custom_gftoa(temp, value, 6);
     }
 
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
+    strcpy(str, temp);
     return count;
 }
 
-int s_sprintf(char *str, va_list args) {
+int s_sprintf(char *str, va_list args, int width_val) {
     char *svalue = va_arg(args, char *);
     int count = 0;
+
+    while (width_val != -1 & width_val > strlen(svalue)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
 
     while (*svalue != '\0') {
         *str++ = *svalue++;
         count++;
     }
 
-    //*str = '\0';
     return count;
 }
 
-int e_sprintf(char *str, va_list args, int length_arr[3]) {
+int e_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
+    char temp[400] = {'0'};
     int count = 0;
+
     if (length_arr[2]){
         long double value = va_arg(args, long double);
-        count = custom_etoa(str, value, 6);
+        count = custom_etoa(temp, value, 6);
     } else {
         double value = va_arg(args, double);
-        count = custom_etoa(str, value, 6);
+        count = custom_etoa(temp, value, 6);
+    }
+
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
     }
 
     return count;
 }
 
-int o_sprintf(char *str, va_list args, int length_arr[3]) {
+int o_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     int count = 0;
     unsigned long int value = va_arg(args, unsigned long int);
     if (length_arr[1]){
@@ -353,7 +387,7 @@ int o_sprintf(char *str, va_list args, int length_arr[3]) {
     }
 
     // Преобразование числа в восьмеричную строку
-    char octalStr[20]; 
+    char octalStr[400]; 
     int idx = 0;
 
     // Обработка особых случаев
@@ -367,66 +401,97 @@ int o_sprintf(char *str, va_list args, int length_arr[3]) {
     }
 
     // Копирование результата в обратном порядке в строку str
+
+    while (width_val != -1 & width_val > strlen(octalStr)){
+        str[count++] = ' ';
+        width_val--;
+    }
+
     while (idx > 0) {
         str[count++] = octalStr[--idx];
     }
-    
-    //str[count] = '\0'; 
 
     return count;
 }
 
-int u_sprintf(char *str, va_list args, int length_arr[3]) {
+int u_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
+    char temp[400] = {'0'};
     int count = 0;
+
     unsigned long int value = va_arg(args, unsigned long int);
 
     if (length_arr[1]){
-        count = custom_utoa(str, (unsigned long int)value);
+        count = custom_utoa(temp, (unsigned long int)value);
     } else if (length_arr[0]){
-        count = custom_utoa(str, (unsigned short int)value);
+        count = custom_utoa(temp, (unsigned short int)value);
     } else{
-        count = custom_utoa(str, (unsigned int)value);
+        count = custom_utoa(temp, (unsigned int)value);
     }
 
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
+    strcpy(str, temp);
     return count;
 }
 
-int x_sprintf(char *str, va_list args, int length_arr[3]) {
+int x_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     unsigned long int value = va_arg(args, unsigned long int);
+    char temp[400] = {'0'};
     int count = 0;
+
     if (length_arr[1]){
-        count = custom_utohex(str, (unsigned long int)value);
+        count = custom_utohex(temp, (unsigned long int)value);
     } else if (length_arr[0]){
-        count = custom_utohex(str, (unsigned short int)value);
+        count = custom_utohex(temp, (unsigned short int)value);
     } else{
-        count = custom_utohex(str, (unsigned int)value);
+        count = custom_utohex(temp, (unsigned int)value);
     }
 
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
+    strcpy(str, temp);
     return count;
 }
 
-int p_sprintf(char *str, va_list args) {
+int p_sprintf(char *str, va_list args, int width_val) {
+    char temp[400] = {'0'};
     int count = 0;
     const uintptr_t ptr = (uintptr_t)va_arg(args, void *);
 
-    const uintptr_t base = 16;
-    const char *hex = "0123456789abcdef";
+    if ((void *)ptr == NULL){
+        char *ret = "(nil)";
+        for (int i = 0; i < 5; i++){
+            temp[count++] = ret[i];
+        }
+    } else {
+        const uintptr_t base = 16;
+        const char *hex = "0123456789abcdef";
 
-    str[count++] = '0';
-    str[count++] = 'x';
-    const int size = sizeof(void *) * 2;
-    int fl = 0;
-    for (int i = size - 1; i >= 0; --i) {
-        const uintptr_t mask = (base - 1) << (i * 4); 
-        const int shift = i * 4;
-        char inp = hex[(ptr & mask) >> shift];
-        if (inp == '0' && fl == 0) continue;
-        else if (fl == 0) fl = 1;
-        str[count++] = inp; 
+        temp[count++] = '0';
+        temp[count++] = 'x';
+        const int size = sizeof(void *) * 2;
+        int fl = 0;
+        for (int i = size - 1; i >= 0; --i) {
+            const uintptr_t mask = (base - 1) << (i * 4); 
+            const int shift = i * 4;
+            char inp = hex[(ptr & mask) >> shift];
+            if (inp == '0' && fl == 0) continue;
+            else if (fl == 0) fl = 1;
+            temp[count++] = inp; 
+        }
     }
-
-    //str[count] = '\0';
-
+    while (width_val != -1 & width_val > strlen(temp)){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
+    strcpy(str, temp);
     return count;
 }
 
@@ -435,24 +500,35 @@ int percent_sprintf(char *str) {
     return 1; 
 }
 
-int c_sprintf(char *str, va_list args) {
+int c_sprintf(char *str, va_list args, int width_val) {
     char value = va_arg(args, int); 
-    *str = value; 
-    return 1; 
+    int count = 0;
+    while (width_val != -1 & width_val > 1){
+        *str++ = ' ';
+        count++;
+        width_val--;
+    }
+    *str++ = value; 
+    count++;
+    return count; 
 }
 
 int s21_sprintf(char *str, char *format, ...) {
     va_list args;
     va_start(args, format);
     int length_arr[3] = {0}; // [h,l,L]
-
+    int width_val = -1;
     int count = 0;
     char *start = str;
 
     while (*format != '\0') {
-        //printf("(%c)", *format);
         if (*format == '%') {
             format++;
+            while (*format >= 48 && *format <= 57){
+                if (width_val == -1) width_val = *format - 48;
+                else width_val = width_val*10 + *format - 48;
+                format++;
+            }
             if (*format == 'h') {
                 length_arr[0] = 1;
                 format++;
@@ -465,35 +541,35 @@ int s21_sprintf(char *str, char *format, ...) {
             }
             switch (*format) {
                 case 'd': {
-                    int temp_count = d_sprintf(str, args, length_arr);
+                    int temp_count = d_sprintf(str, args, length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'f': {
-                    int temp_count = f_sprintf(str, args, length_arr);
+                    int temp_count = f_sprintf(str, args, length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 's': {
-                    int temp_count = s_sprintf(str, args);
+                    int temp_count = s_sprintf(str, args, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'i':{
-                    int temp_count = d_sprintf(str, args, length_arr);
+                    int temp_count = d_sprintf(str, args, length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'E':{
-                    int temp_count = e_sprintf(str, args, length_arr);
+                    int temp_count = e_sprintf(str, args, length_arr, width_val);
                     for (int i = 0; str[i] != '\0'; i++) {
                         if (str[i] >= 'a' && str[i] <= 'f') {
                             str[i] = toupper(str[i]);
@@ -505,14 +581,14 @@ int s21_sprintf(char *str, char *format, ...) {
                     break;
                 }
                 case 'e':{
-                    int temp_count = e_sprintf(str, args,length_arr);
+                    int temp_count = e_sprintf(str, args,length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'G':{
-                    int temp_count = g_sprintf(str, args, length_arr);
+                    int temp_count = g_sprintf(str, args, length_arr, width_val);
                     for (int i = 0; str[i] != '\0'; i++) {
                         if (str[i] >= 'a' && str[i] <= 'f') {
                             str[i] = toupper(str[i]);
@@ -524,7 +600,7 @@ int s21_sprintf(char *str, char *format, ...) {
                     break;
                 }
                 case 'g':{
-                    int temp_count = g_sprintf(str, args, length_arr);  
+                    int temp_count = g_sprintf(str, args, length_arr, width_val);  
                     count += temp_count;
                     str += temp_count;
                     format++;
@@ -538,21 +614,21 @@ int s21_sprintf(char *str, char *format, ...) {
                     break;
                 }
                 case 'o':{
-                    int temp_count = o_sprintf(str, args, length_arr);
+                    int temp_count = o_sprintf(str, args, length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'u':{
-                    int temp_count = u_sprintf(str, args, length_arr);
+                    int temp_count = u_sprintf(str, args, length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'X': {
-                    int temp_count = x_sprintf(str, args, length_arr);
+                    int temp_count = x_sprintf(str, args, length_arr, width_val);
 
                     for (int i = 0; str[i] != '\0'; i++) {
                         if (str[i] >= 'a' && str[i] <= 'f') {
@@ -565,7 +641,7 @@ int s21_sprintf(char *str, char *format, ...) {
                     break;
                 }
                 case 'x': {
-                    int temp_count = x_sprintf(str, args, length_arr);
+                    int temp_count = x_sprintf(str, args, length_arr, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
@@ -579,14 +655,14 @@ int s21_sprintf(char *str, char *format, ...) {
                     break;
                 }
                 case 'c': {
-                    int temp_count = c_sprintf(str, args);
+                    int temp_count = c_sprintf(str, args,width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
                     break;
                 }
                 case 'p':{
-                    int temp_count = p_sprintf(str, args);
+                    int temp_count = p_sprintf(str, args, width_val);
                     count += temp_count;
                     str += temp_count;
                     format++;
@@ -597,12 +673,12 @@ int s21_sprintf(char *str, char *format, ...) {
             }
         } else {
             *str = *format;
-            //printf("(%s)\n",str);
             count++;
             str++;
             format++;
         }
         length_arr[0] = 0,length_arr[1] = 0,length_arr[2] = 0;
+        width_val = -1;
     }
 
     *str = '\0';
@@ -611,31 +687,49 @@ int s21_sprintf(char *str, char *format, ...) {
 }
 
 int main() {
-    char buffer1[100], buffer2[100000], buffer3[100], buffer4[100], buffer5[100], buffer6[100],
-        buffer7[100], buffer8[100], buffer9[100], buffer10[100], buffer11[100], buffer12[100],
-        buffer13[100], buffer14[100], buffer15[100], buffer16[100];
+    // char buffer1[100];
+    // char buffer2[100];
 
-    int printed_chars_n = 0;
-    int printed_chars_p = 123;
-    int *ukaz = &printed_chars_p;
-    void *ptr = NULL;
-    double (*func_ptr)(double, double) = pow;
-    long double x = -123.456;
-    // int x = 5;
+    // double num = -123.521123321;
 
-    sprintf(buffer1, "%p\n",func_ptr);
-    printf("%s", buffer1);
+    char buffer1[100];
+    int standard_result = sprintf(buffer1, "Integer: %5d, Octal: %5o, Hex: %7x, Float: %f, String: %10s", 42, 42, 42, 3.14, "Hello");
 
-    s21_sprintf(buffer2, "%p\n",func_ptr);
-    printf("%s", buffer2);
+    char buffer2[100];
+    int s21_result = s21_sprintf(buffer2, "Integer: %5d, Octal: %5o, Hex: %7x, Float: %f, String: %10s", 42, 42, 42, 3.14, "Hello");
+    // int abd = 0;
 
+    // s21_sprintf(buffer1,"%12c%d%c%c",'s',123,'s','g');
+    // s21_sprintf(buffer2,"%12f",num);
 
-    // sprintf(buffer1, "%Le\n",x);
+    printf("%s\n",buffer1);
+    printf("%s\n",buffer2);
+
+    // char buffer1[100], buffer2[100000], buffer3[100], buffer4[100], buffer5[100], buffer6[100],
+    //     buffer7[100], buffer8[100], buffer9[100], buffer10[100], buffer11[100], buffer12[100],
+    //     buffer13[100], buffer14[100], buffer15[100], buffer16[100];
+
+    // int printed_chars_n = 0;
+    // int printed_chars_p = 123;
+    // int *ukaz = &printed_chars_p;
+    // void *ptr = NULL;
+    // double (*func_ptr)(double, double) = pow;
+    // long double x = -123.456;
+    // // int x = 5;
+
+    // sprintf(buffer1, "%p\n",ptr);
     // printf("%s", buffer1);
 
-    // s21_sprintf(buffer2, "%Le\n",x);
+    // s21_sprintf(buffer2, "%p\n",ptr);
     // printf("%s", buffer2);
 
 
-    return 0;
+    // // sprintf(buffer1, "%Le\n",x);
+    // // printf("%s", buffer1);
+
+    // // s21_sprintf(buffer2, "%Le\n",x);
+    // // printf("%s", buffer2);
+
+
+    // return 0;
 }

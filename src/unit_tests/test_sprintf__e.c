@@ -1,5 +1,4 @@
 #include "test_string.h"
-#include <math.h>
 
 // Тест-кейс 1: Тест для спецификатора %e с положительным значением
 START_TEST(s21_sprintf_e_1) {
