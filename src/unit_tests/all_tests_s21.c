@@ -29,6 +29,9 @@ int main() {
         // strlen_suite(),
         // strncat_suite(),
         // strncpy_suite(),
+        //  memcpy_suite(),
+        //to_upper_suite(),
+        //to_lower_suite(),
         sprintf_f_suite(),
         sprintf_c_suite(),
         sprintf_i_suite(),
@@ -49,6 +52,8 @@ int main() {
         sprintf_all_suite(),
         sprintf_width_suite(),
         sprintf_length_suite(),
+       
+
 
         0
     };

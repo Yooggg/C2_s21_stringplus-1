@@ -21,6 +21,9 @@ Suite *insert_suite(void);
 Suite *strlen_suite(void);
 Suite *strncat_suite(void);
 Suite *strncpy_suite(void);
+Suite *memcpy_suite(void);
+Suite *to_upper_suite(void);
+Suite *to_lower_suite(void);
 
 
 Suite *sprintf_f_suite(void);
