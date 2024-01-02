@@ -47,4 +47,8 @@ char *s21_strncat(char *dest, const char *src, size_t n);
 
 int s21_sprintf(char *str, char *format, ...);
 
+void *s21_to_upper(const char *str);
+void *s21_to_lower(const char *str);
+void *s21_memcpy(void *dest, const void *src, size_t n);
+
 #endif

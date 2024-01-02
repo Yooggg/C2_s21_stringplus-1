@@ -286,7 +286,7 @@ int d_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     count = custom_itoa(temp, (int)value);
   }
 
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -305,7 +305,7 @@ int f_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     double value = va_arg(args, double);
     count = custom_ftoa(temp, value, 6);
   }
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -331,7 +331,7 @@ int g_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
       count = custom_gftoa(temp, value, 6);
   }
 
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -344,7 +344,7 @@ int s_sprintf(char *str, va_list args, int width_val) {
   char *svalue = va_arg(args, char *);
   int count = 0;
 
-  while (width_val != -1 & width_val > strlen(svalue)) {
+  while (width_val != -1 && width_val > (int)strlen(svalue)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -370,7 +370,7 @@ int e_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     count = custom_etoa(temp, value, 6);
   }
 
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -406,7 +406,7 @@ int o_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
 
   // Копирование результата в обратном порядке в строку str
 
-  while (width_val != -1 & width_val > strlen(octalStr)) {
+  while (width_val != -1 && width_val > (int)strlen(octalStr)) {
     str[count++] = ' ';
     width_val--;
   }
@@ -432,7 +432,7 @@ int u_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     count = custom_utoa(temp, (unsigned int)value);
   }
 
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -454,7 +454,7 @@ int x_sprintf(char *str, va_list args, int length_arr[3], int width_val) {
     count = custom_utohex(temp, (unsigned int)value);
   }
 
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -492,7 +492,7 @@ int p_sprintf(char *str, va_list args, int width_val) {
       temp[count++] = inp;
     }
   }
-  while (width_val != -1 & width_val > strlen(temp)) {
+  while (width_val != -1 && width_val > (int)strlen(temp)) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -509,7 +509,7 @@ int percent_sprintf(char *str) {
 int c_sprintf(char *str, va_list args, int width_val) {
   char value = va_arg(args, int);
   int count = 0;
-  while (width_val != -1 & width_val > 1) {
+  while (width_val != -1 && width_val > 1) {
     *str++ = ' ';
     count++;
     width_val--;
@@ -696,54 +696,54 @@ int s21_sprintf(char *str, char *format, ...) {
   return str - start;
 }
 
-int main() {
-  // char buffer1[100];
-  // char buffer2[100];
+// int main() {
+//   // char buffer1[100];
+//   // char buffer2[100];
 
-  // double num = -123.521123321;
+//   // double num = -123.521123321;
 
-  char buffer1[100];
-  int standard_result = sprintf(
-      buffer1, "Integer: %5d, Octal: %5o, Hex: %7x, Float: %f, String: %10s",
-      42, 42, 42, 3.14, "Hello");
+//   char buffer1[100];
+//   sprintf(
+//       buffer1, "Integer: %5d, Octal: %5o, Hex: %7x, Float: %f, String: %10s",
+//       42, 42, 42, 3.14, "Hello");
 
-  char buffer2[100];
-  int s21_result = s21_sprintf(
-      buffer2, "Integer: %5d, Octal: %5o, Hex: %7x, Float: %f, String: %10s",
-      42, 42, 42, 3.14, "Hello");
-  // int abd = 0;
+//   char buffer2[100];
+//   s21_sprintf(
+//       buffer2, "Integer: %5d, Octal: %5o, Hex: %7x, Float: %f, String: %10s",
+//       42, 42, 42, 3.14, "Hello");
+//   // int abd = 0;
 
-  // s21_sprintf(buffer1,"%12c%d%c%c",'s',123,'s','g');
-  // s21_sprintf(buffer2,"%12f",num);
+//   // s21_sprintf(buffer1,"%12c%d%c%c",'s',123,'s','g');
+//   // s21_sprintf(buffer2,"%12f",num);
 
-  printf("%s\n", buffer1);
-  printf("%s\n", buffer2);
+//   printf("%s\n", buffer1);
+//   printf("%s\n", buffer2);
 
-  // char buffer1[100], buffer2[100000], buffer3[100], buffer4[100],
-  // buffer5[100], buffer6[100],
-  //     buffer7[100], buffer8[100], buffer9[100], buffer10[100], buffer11[100],
-  //     buffer12[100], buffer13[100], buffer14[100], buffer15[100],
-  //     buffer16[100];
+//   // char buffer1[100], buffer2[100000], buffer3[100], buffer4[100],
+//   // buffer5[100], buffer6[100],
+//   //     buffer7[100], buffer8[100], buffer9[100], buffer10[100], buffer11[100],
+//   //     buffer12[100], buffer13[100], buffer14[100], buffer15[100],
+//   //     buffer16[100];
 
-  // int printed_chars_n = 0;
-  // int printed_chars_p = 123;
-  // int *ukaz = &printed_chars_p;
-  // void *ptr = NULL;
-  // double (*func_ptr)(double, double) = pow;
-  // long double x = -123.456;
-  // // int x = 5;
+//   // int printed_chars_n = 0;
+//   // int printed_chars_p = 123;
+//   // int *ukaz = &printed_chars_p;
+//   // void *ptr = NULL;
+//   // double (*func_ptr)(double, double) = pow;
+//   // long double x = -123.456;
+//   // // int x = 5;
 
-  // sprintf(buffer1, "%p\n",ptr);
-  // printf("%s", buffer1);
+//   // sprintf(buffer1, "%p\n",ptr);
+//   // printf("%s", buffer1);
 
-  // s21_sprintf(buffer2, "%p\n",ptr);
-  // printf("%s", buffer2);
+//   // s21_sprintf(buffer2, "%p\n",ptr);
+//   // printf("%s", buffer2);
 
-  // // sprintf(buffer1, "%Le\n",x);
-  // // printf("%s", buffer1);
+//   // // sprintf(buffer1, "%Le\n",x);
+//   // // printf("%s", buffer1);
 
-  // // s21_sprintf(buffer2, "%Le\n",x);
-  // // printf("%s", buffer2);
+//   // // s21_sprintf(buffer2, "%Le\n",x);
+//   // // printf("%s", buffer2);
 
-  // return 0;
-}
+//   // return 0;
+// }
