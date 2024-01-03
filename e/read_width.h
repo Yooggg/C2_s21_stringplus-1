@@ -3,4 +3,4 @@
 
 void readNumberWithWidth(const char *str, void *data_ptr, char type, int width);
 
-#endif 
+#endif

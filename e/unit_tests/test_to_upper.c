@@ -64,9 +64,9 @@ END_TEST
 
 // Тест-кейс 8: Преобразование строки с нуль-символом (должен вернуть пустую строку)
 START_TEST(test_to_upper_8) {
-    const char str[] = "Hello\0World!";
+    const char *str = NULL;
     void *result = s21_to_upper(str);
-    ck_assert_str_eq(result, "HELLOWORD");
+    ck_assert_str_eq(result, NULL);
     free(result);
 }
 END_TEST
