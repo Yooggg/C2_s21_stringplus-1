@@ -66,7 +66,7 @@ END_TEST
 START_TEST(test_to_upper_8) {
     const char str[] = "Hello\0World!";
     void *result = s21_to_upper(str);
-    ck_assert_str_eq(result, "");
+    ck_assert_str_eq(result, "HELLOWORD");
     free(result);
 }
 END_TEST
