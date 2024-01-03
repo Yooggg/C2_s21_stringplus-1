@@ -11,7 +11,9 @@ void *s21_to_lower(const char *str) {
   char *low = s21_NULL;
   low = calloc(4 * s21_strlen(str) + 1, sizeof(char));
   if (low != s21_NULL) {
-    for (int i = 0, j = 0; str[i] != '\0'; i++) {
+    for (int i = 0, j = 0; i < s21_strlen(str); i++) {
+      if(str[i] == '\0')
+        continue;
       if ('A' <= str[i] && str[i] <= 'Z') {
         low[j] = str[i] + 32;
       } else if (str[i] == '\t') {
