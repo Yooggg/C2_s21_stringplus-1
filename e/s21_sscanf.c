@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void readNumberWithWidth(const char *str, int *int_ptr, int width) {
+int readNumberWithWidth(const char *str, int *int_ptr, int width) {
   int value = 0;
   int sign = 1;
   int i = 0;
@@ -21,18 +21,14 @@ void readNumberWithWidth(const char *str, int *int_ptr, int width) {
 
   // Считываем число, учитывая указанную ширину поля
   int count = 0;
-  while (str[i] >= '0' && str[i] <= '9' && count < width) {
+  while (*str >= '0' && *str <= '9' && count < width) {
     value = value * 10 + (str[i] - '0');
     i++;
     count++;
   }
 
-  // Пропускаем оставшуюся часть числа, если она превышает указанную ширину
-  while (str[i] >= '0' && str[i] <= '9') {
-    i++;
-  }
-
   *int_ptr = value * sign;
+  return i;
 }
 
 int int_counter(int a) {
@@ -62,16 +58,23 @@ int s21_sscanf(const char *str, const char *format, ...) {
       int width = 0;
       if (format[format_index] >= '0' && format[format_index] <= '9') {
         width = format[format_index] - '0';  // получаем ширину поля
+        printf("width %d\n", width);
         format_index++;
       }
       switch (format[format_index]) {
         case 'd': {  // целое число
-          int *int_ptr = va_arg(args, int *);
-          readNumberWithWidth(str + str_index, int_ptr, width > 0 ? width : 0);
+
+          int *int_ptr =
+              va_arg(args, int *);  // указатель на интовую переменную
+          int smeshenie = readNumberWithWidth(str + str_index, int_ptr, width);
+          printf("smesenie %d\n", smeshenie);
+          printf("%c\n", *(str + smeshenie));
           int digits = int_counter(*int_ptr);
-          str_index += (width > 0 && width > digits)
-                           ? width
-                           : digits;  // учитываем ширину поля
+          if (width == 0)
+            str_index += digits;
+          else
+            str = str + smeshenie;
+
           count++;
           break;
         }
@@ -214,41 +217,21 @@ int s21_sscanf(const char *str, const char *format, ...) {
 }
 
 int main() {
-  // Test 1: Reading integer with width
-  char input1[] = "Number: 12345";
-  int number1;
-  s21_sscanf(input1, "Number: %5d", &number1);
-  printf("Test 1 (s21_sscanf): Read number with width: %d\n", number1);
+  // Тестовая строка
+  // char input[] = "12345 67890 -54321 0";
+  char input[] = "1234 5";
 
-  sscanf(input1, "Number: %5d", &number1);
-  printf("Test 1 (sscanf): Read number with width: %d\n\n", number1);
+  int num1 = 0;
+  int num2 = 0;
+  // int num3 = 0;
+  // int num4 = 0;
 
-  // Test 2: Reading string with width
-  char input2[] = "Text: HelloWorld";
-  char text2[10];
-  s21_sscanf(input2, "Text: %9s", text2);
-  printf("Test 2 (s21_sscanf): Read text with width: %s\n", text2);
+  // Используем новую функцию s21_sscanf для чтения целых чисел с указанной
+  // шириной поля
+  s21_sscanf(input, "%4d %3d", &num1, &num2);
 
-  sscanf(input2, "Text: %9s", text2);
-  printf("Test 2 (sscanf): Read text with width: %s\n\n", text2);
-
-  // Test 3: Reading float with width
-  char input3[] = "Float: 12.345";
-  float float3;
-  s21_sscanf(input3, "Float: %6f", &float3);
-  printf("Test 3 (s21_sscanf): Read float with width: %.3f\n", float3);
-
-  sscanf(input3, "Float: %6f", &float3);
-  printf("Test 3 (sscanf): Read float with width: %.3f\n\n", float3);
-
-  // Test 4: Reading hexadecimal number with width
-  char input4[] = "Hex: ABCDEF";
-  unsigned int hex4;
-  s21_sscanf(input4, "Hex: %4x", &hex4);
-  printf("Test 4 (s21_sscanf): Read hex with width: %x\n", hex4);
-
-  sscanf(input4, "Hex: %4x", &hex4);
-  printf("Test 4 (sscanf): Read hex with width: %x\n\n", hex4);
+  // Вывод результатов
+  printf("Test values: %d %d\n", num1, num2);
 
   return 0;
 }
