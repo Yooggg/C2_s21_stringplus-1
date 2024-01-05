@@ -22,6 +22,18 @@ void cleaning(SSCANF *params) {
     params->buff[j] = 0;
   }
 }
+char *s21_strchr(const char *str, int c) {
+  while (*str != '\0') {
+    if (*str == (char)c) {
+      return (char *)str;  // Found the character, return its address
+    }
+    str++;
+  }
+
+  // If the character is not found, return NULL
+  return NULL;
+}
+
 int PARSER(const char *str,
            SSCANF *Param) {  //ЗДЕСЬ МЫ ПЕРЕДАЕМ ФОРМАТНУЮ СТРОКУ И
                              //ДВИЖЕМСЯ,ПОКА НЕ СОБЕРЕМ СЕЦИФИКАТОР
@@ -39,12 +51,12 @@ int PARSER(const char *str,
   }
   return shift;
 }
-
-int CHAR_FUNC(va_list *args, int *count, const char *str, int *str_index) {
+char *CHAR_FUNC(va_list *args, int *count, const char *str, int *str_index) {
   char *char_ptr = va_arg(*args, char *);
   *char_ptr = str[*str_index];
-  str_index++;
-  count++;
+  (*str_index)++;
+  (*count)++;
+  return char_ptr;
 }
 
 int s21_sscanf(const char *str, const char *format, ...) {
@@ -56,23 +68,34 @@ int s21_sscanf(const char *str, const char *format, ...) {
   while (format[format_index] != '\0') {
     if (format[format_index] == '%' && format[format_index + 1] != '\0') {
       format_index += PARSER(format, &Param);
-    } else
+    } else {
       Param.buff[Param.i++] =
           format[format_index];  // это увеличение индекса массива для ненужных
                                  // символов
-
-    format_index += PARSER(format, &Param);  //движемся по форматной строке
+      format_index++;
+    }
+    //движемся по форматной строке
     //теперь условие обработки благодаря нашей замечательной структуре
     if (Param.spec != 0) {
       if (Param.spec ==
           'c') {  // самая простая обработка, поэтому засунул в начало
-        char *char_ptr = va_arg(args, char *);
-        *char_ptr = str[str_index];
-        str_index++;
-        count++;
+        char *char_ptr = CHAR_FUNC(&args, &count, str, &str_index);
       }
+
+      cleaning(&Param);
     }
   }
 
   return count;
+}
+
+int main() {
+  char buffer[10];
+  const char *input = "Hello, World!";
+  int result = sscanf(input, "%c %c", &buffer[0], &buffer[1]);
+
+  printf("Result: %d\n", result);
+  printf("Buffer: %c %c\n", buffer[0], buffer[1]);
+
+  return 0;
 }
