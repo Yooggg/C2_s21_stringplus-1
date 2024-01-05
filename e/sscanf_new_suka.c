@@ -40,9 +40,9 @@ int PARSER(const char *str,
   return shift;
 }
 
-int CHAR_FUNC(va_list *argc, int *count, const char *str, int *str_index) {
-  char *char_ptr = va_arg(args, char *);
-  *char_ptr = str[str_index];
+int CHAR_FUNC(va_list *args, int *count, const char *str, int *str_index) {
+  char *char_ptr = va_arg(*args, char *);
+  *char_ptr = str[*str_index];
   str_index++;
   count++;
 }
@@ -71,6 +71,8 @@ int s21_sscanf(const char *str, const char *format, ...) {
         str_index++;
         count++;
       }
-
-      return count;
     }
+  }
+
+  return count;
+}
