@@ -3,6 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "s21_string.h"
+size_t s21_strlen(const char *str) {
+  size_t count = 0;
+  while (*str != '\0') {
+    count++;
+    str++;
+  }
+  return count;
+}
 int readNumberWithWidth(const char *str, int *int_ptr, int width) {
   int value = 0;
   int sign = 1;
@@ -58,22 +67,18 @@ int s21_sscanf(const char *str, const char *format, ...) {
       int width = 0;
       if (format[format_index] >= '0' && format[format_index] <= '9') {
         width = format[format_index] - '0';  // получаем ширину поля
-        printf("width %d\n", width);
+        if (width > s21_strlen(str)) {
+          width = s21_strlen(str);
+        }
         format_index++;
       }
       switch (format[format_index]) {
         case 'd': {  // целое число
-
           int *int_ptr =
               va_arg(args, int *);  // указатель на интовую переменную
           int smeshenie = readNumberWithWidth(str + str_index, int_ptr, width);
-          printf("smesenie %d\n", smeshenie);
-          printf("%c\n", *(str + smeshenie));
           int digits = int_counter(*int_ptr);
-          if (width == 0)
-            str_index += digits;
-          else
-            str = str + smeshenie;
+          str = str + width;
 
           count++;
           break;
@@ -219,19 +224,19 @@ int s21_sscanf(const char *str, const char *format, ...) {
 int main() {
   // Тестовая строка
   // char input[] = "12345 67890 -54321 0";
-  char input[] = "1234 5";
+  char input[] = "12345";
 
   int num1 = 0;
-  int num2 = 0;
+  // int num2 = 0;
   // int num3 = 0;
   // int num4 = 0;
 
   // Используем новую функцию s21_sscanf для чтения целых чисел с указанной
   // шириной поля
-  s21_sscanf(input, "%4d %3d", &num1, &num2);
+  s21_sscanf(input, "%d", &num1);
 
   // Вывод результатов
-  printf("Test values: %d %d\n", num1, num2);
+  printf("Test values: %d\n", num1);
 
   return 0;
 }
