@@ -73,13 +73,10 @@ int s21_sscanf(const char *str, const char *format, ...) {
         format_index++;
       }
       switch (format[format_index]) {
-        case 'd': {  // целое число
-          int *int_ptr =
-              va_arg(args, int *);  // указатель на интовую переменную
-          int smeshenie = readNumberWithWidth(str + str_index, int_ptr, width);
-          int digits = int_counter(*int_ptr);
-          str = str + width;
-
+        case 'd': {
+          int *int_ptr = va_arg(args, int *);
+          *int_ptr = atoi(str + str_index);
+          str_index += int_counter(*int_ptr);
           count++;
           break;
         }
