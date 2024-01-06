@@ -13,6 +13,14 @@ typedef struct {
   int i;                // индекс мусорного массива
   char zvezda;          // это игнор
 } SSCANF;
+int s21_strcmp(const char *str1, const char *str2) {
+  while (*str1 != '\0' && *str2 != '\0' && *str1 == *str2) {
+    str1++;
+    str2++;
+  }
+
+  return (*str1 - *str2);
+}
 void cleaning(SSCANF *params) {
   params->spec = 0;
   params->width = 0;
@@ -25,27 +33,27 @@ void cleaning(SSCANF *params) {
     params->buff[j] = 0;
   }
 }
-int countDigits(
-    int number) {  //исло цифр в int числе, надо для int спецификаторов
-  // Обрабатываем случай отрицательных чисел
-  if (number < 0) {
-    number = -number;
+int countDigits(void *numPtr, const char *type) {
+  int *intPtr = (int *)numPtr;
+  long int *longIntPtr = (long int *)numPtr;
+  short int *shortIntPtr = (short int *)numPtr;
+
+  int result;  // Переменная для хранения результата
+
+  if (s21_strcmp(type, "int") == 0) {
+    // Преобразование int к long int для общности кода
+    result = snprintf(NULL, 0, "%ld", (long int)(*intPtr));
+  } else if (s21_strcmp(type, "long int") == 0) {
+    result = snprintf(NULL, 0, "%ld", *longIntPtr);
+  } else if (s21_strcmp(type, "short int") == 0) {
+    result = snprintf(NULL, 0, "%hd", *shortIntPtr);
+  } else {
+    // Обработка неверного типа
+    printf("Неверный тип данных\n");
+    result = -1;
   }
 
-  int digitCount = 0;
-
-  // Обрабатываем случай числа равного 0
-  if (number == 0) {
-    return 1;
-  }
-
-  // Считаем количество цифр в числе
-  while (number > 0) {
-    number /= 10;
-    digitCount++;
-  }
-
-  return digitCount;
+  return result;  // Возвращаем результат
 }
 
 char *s21_strchr(const char *str, int c) {
@@ -59,12 +67,30 @@ char *s21_strchr(const char *str, int c) {
   // If the character is not found, return NULL
   return NULL;
 }
-int *podgon_pod_znachenie(int *int_ptr, SSCANF Param) {
-  while (Param.width <= countDigits(*int_ptr) && Param.width != 0) {
-    *int_ptr /= 10;
-    Param.width++;
+void *podgon_pod_znachenie(void *numPtr, const char *type, int width) {
+  if (numPtr == NULL || width <= 0) {
+    printf("Ошибка: неверные аргументы\n");
+    return NULL;
   }
-  return int_ptr;
+
+  while (countDigits(numPtr, type) >= width) {
+    if (s21_strcmp(type, "int") == 0) {
+      int *intPtr = (int *)numPtr;
+      *intPtr /= 10;
+    } else if (s21_strcmp(type, "long int") == 0) {
+      long int *longIntPtr = (long int *)numPtr;
+      *longIntPtr /= 10;
+    } else if (s21_strcmp(type, "short int") == 0) {
+      short int *shortIntPtr = (short int *)numPtr;
+      *shortIntPtr /= 10;
+    } else {
+      printf("Неверный тип данных\n");
+      return NULL;
+    }
+    width++;
+  }
+
+  return numPtr;
 }
 int PARSER(const char *str,
            SSCANF *Param) {  //ЗДЕСЬ МЫ ПЕРЕДАЕМ ФОРМАТНУЮ СТРОКУ И
@@ -100,16 +126,14 @@ int *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count, const char *str) {
     if (Param.length == 0) {
       int_ptr = va_arg(*args, int *);
       *int_ptr = (int)strtol(str, &endptr, 10);
-
-      // printf("digits %d\n",countDigits(*int_ptr));
-      if (width < countDigits(*int_ptr)) {
-        int_ptr = podgon_pod_znachenie(int_ptr, Param);
+      if (width < countDigits(int_ptr, "int")) {
+        int_ptr = podgon_pod_znachenie(int_ptr, "int", Param.width);
       }
     } else if (Param.length == 'h') {
       short_ptr = va_arg(*args, short int *);
       *short_ptr = (short int)strtol(str, &endptr, 10);
-      if (width < countDigits(*int_ptr)) {
-        short_ptr = podgon_pod_znachenie(int_ptr, Param);
+      if (width < countDigits(int_ptr, "int")) {
+        short_ptr = podgon_pod_znachenie(short_ptr, "short int", Param.width);
       }
     }
   }
@@ -144,7 +168,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
         str += sizeof(*char_ptr);
       } else if (Param.spec == 'd' || Param.spec == 'i') {  // diuoxXp
         int *int_ptr = D_SSCNAF_SPEC(Param, &args, &count, str);
-        str += countDigits(*int_ptr);
+        str += countDigits(int_ptr, "int");
       }
 
       cleaning(&Param);
@@ -156,12 +180,12 @@ int s21_sscanf(const char *str, const char *format, ...) {
 
 int main() {
   int number1 = 0;
-  int number2 = 0;
+  char number2;
   const char *input = "123 3565";
-  int result = s21_sscanf(input, "%1d %1d", &number1, &number2);
+  int result = s21_sscanf(input, "%3d %c", &number1, &number2);
 
   printf("Result: %d\n", result);
-  printf("Buffer: %d %d\n", number1, number2);
+  printf("Buffer: %d %c\n", number1, number2);
 
   return 0;
 }
