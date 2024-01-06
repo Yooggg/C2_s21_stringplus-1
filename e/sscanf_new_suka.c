@@ -59,7 +59,13 @@ char *s21_strchr(const char *str, int c) {
   // If the character is not found, return NULL
   return NULL;
 }
-
+int *podgon_pod_znachenie(int *int_ptr, SSCANF Param) {
+  while (Param.width <= countDigits(*int_ptr) && Param.width != 0) {
+    *int_ptr /= 10;
+    Param.width++;
+  }
+  return int_ptr;
+}
 int PARSER(const char *str,
            SSCANF *Param) {  //ЗДЕСЬ МЫ ПЕРЕДАЕМ ФОРМАТНУЮ СТРОКУ И
                              //ДВИЖЕМСЯ,ПОКА НЕ СОБЕРЕМ СЕЦИФИКАТОР
@@ -83,23 +89,27 @@ char *CHAR_FUNC(va_list *args, int *count, const char *str) {
   (*count)++;
   return char_ptr;
 }
+
 int *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count, const char *str) {
   int *int_ptr;
+  short int *short_ptr;
+  char *endptr;
+  int width = Param.width;
+
   if (Param.spec == 'd') {
     if (Param.length == 0) {
-      char *endptr;
       int_ptr = va_arg(*args, int *);
-      *int_ptr = strtol(str, &endptr, 10);
+      *int_ptr = (int)strtol(str, &endptr, 10);
 
-      int width = Param.width;
       // printf("digits %d\n",countDigits(*int_ptr));
       if (width < countDigits(*int_ptr)) {
-        while (width <= countDigits(*int_ptr) && Param.width != 0) {
-          *int_ptr /= 10;
-          // printf("width %d\n",width);
-          // printf("%d\n",*int_ptr);
-          width++;
-        }
+        int_ptr = podgon_pod_znachenie(int_ptr, Param);
+      }
+    } else if (Param.length == 'h') {
+      short_ptr = va_arg(*args, short int *);
+      *short_ptr = (short int)strtol(str, &endptr, 10);
+      if (width < countDigits(*int_ptr)) {
+        short_ptr = podgon_pod_znachenie(int_ptr, Param);
       }
     }
   }
@@ -134,7 +144,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
         str += sizeof(*char_ptr);
       } else if (Param.spec == 'd' || Param.spec == 'i') {  // diuoxXp
         int *int_ptr = D_SSCNAF_SPEC(Param, &args, &count, str);
-        if (Param.width) str += countDigits(*int_ptr);
+        str += countDigits(*int_ptr);
       }
 
       cleaning(&Param);
@@ -148,7 +158,7 @@ int main() {
   int number1 = 0;
   int number2 = 0;
   const char *input = "123 3565";
-  int result = s21_sscanf(input, "%3d %3d", &number1, &number2);
+  int result = s21_sscanf(input, "%1d %1d", &number1, &number2);
 
   printf("Result: %d\n", result);
   printf("Buffer: %d %d\n", number1, number2);
