@@ -87,9 +87,20 @@ int *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count, const char *str) {
   int *int_ptr;
   if (Param.spec == 'd') {
     if (Param.length == 0) {
+      char *endptr;
       int_ptr = va_arg(*args, int *);
-      *int_ptr = atoi(str + Param.width);
-    } else if (Param.spec = 'h') {
+      *int_ptr = strtol(str, &endptr, 10);
+
+      int width = Param.width;
+      // printf("digits %d\n",countDigits(*int_ptr));
+      if (width < countDigits(*int_ptr)) {
+        while (width <= countDigits(*int_ptr) && Param.width != 0) {
+          *int_ptr /= 10;
+          // printf("width %d\n",width);
+          // printf("%d\n",*int_ptr);
+          width++;
+        }
+      }
     }
   }
   (*count)++;
@@ -123,7 +134,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
         str += sizeof(*char_ptr);
       } else if (Param.spec == 'd' || Param.spec == 'i') {  // diuoxXp
         int *int_ptr = D_SSCNAF_SPEC(Param, &args, &count, str);
-        str += countDigits(*int_ptr);
+        if (Param.width) str += countDigits(*int_ptr);
       }
 
       cleaning(&Param);
@@ -136,8 +147,8 @@ int s21_sscanf(const char *str, const char *format, ...) {
 int main() {
   int number1 = 0;
   int number2 = 0;
-  const char *input = "123456 3565";
-  int result = s21_sscanf(input, "%d %d", &number1, &number2);
+  const char *input = "123 3565";
+  int result = s21_sscanf(input, "%3d %3d", &number1, &number2);
 
   printf("Result: %d\n", result);
   printf("Buffer: %d %d\n", number1, number2);
