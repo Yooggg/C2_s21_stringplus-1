@@ -25,7 +25,7 @@ void cleaning(SSCANF *params) {
 char *s21_strchr(const char *str, int c) {
   while (*str != '\0') {
     if (*str == (char)c) {
-      return (char *)str;  // Found the character, return its address
+      return (char *)str;  // нашли char, вернули адрес
     }
     str++;
   }
@@ -51,35 +51,42 @@ int PARSER(const char *str,
   }
   return shift;
 }
-char *CHAR_FUNC(va_list *args, int *count, const char *str, int *str_index) {
+char *CHAR_FUNC(va_list *args, int *count, const char *str) {
   char *char_ptr = va_arg(*args, char *);
-  *char_ptr = str[*str_index];
-  (*str_index)++;
+  *char_ptr = *str;
   (*count)++;
   return char_ptr;
 }
 
 int s21_sscanf(const char *str, const char *format, ...) {
   va_list args;
-  int count = 0, format_index = 0, width = 0, str_index = 0;
+  int count = 0, width = 0;
   va_start(args, format);
   SSCANF Param = {0};
   cleaning(&Param);
-  while (format[format_index] != '\0') {
-    if (format[format_index] == '%' && format[format_index + 1] != '\0') {
-      format_index += PARSER(format, &Param);
+  while (*format != '\0') {
+    if (*format == '%') {
+      format += PARSER(format, &Param);
     } else {
       Param.buff[Param.i++] =
-          format[format_index];  // это увеличение индекса массива для ненужных
-                                 // символов
-      format_index++;
+          *format;  // это увеличение индекса массива для ненужных символов
+      if (*format == *str) {
+        str++;
+      }
+      format++;
+      // printf("format %c\n",*format);     printf("str %c\n",*str);
+      // // printf("buffer %s.\n",Param.buff);
     }
     //движемся по форматной строке
     //теперь условие обработки благодаря нашей замечательной структуре
     if (Param.spec != 0) {
+      // printf("new %c",*str);
       if (Param.spec ==
           'c') {  // самая простая обработка, поэтому засунул в начало
-        char *char_ptr = CHAR_FUNC(&args, &count, str, &str_index);
+
+        char *char_ptr = CHAR_FUNC(&args, &count, str);
+        str++;
+      } else if (s21_strchr("diuoxXp", Param.spec)) {
       }
 
       cleaning(&Param);
@@ -92,7 +99,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
 int main() {
   char buffer[10];
   const char *input = "Hello, World!";
-  int result = sscanf(input, "%c %c", &buffer[0], &buffer[1]);
+  int result = sscanf(input, "Hello %c %c", &buffer[0], &buffer[1]);
 
   printf("Result: %d\n", result);
   printf("Buffer: %c %c\n", buffer[0], buffer[1]);
