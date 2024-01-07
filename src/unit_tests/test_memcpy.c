@@ -110,30 +110,30 @@ START_TEST(test_memcpy_11) {
 END_TEST
 
 Suite *memcpy_suite(void) {
-    Suite *s;
-    TCase *tc_memcpy;
+  Suite *s;
+  TCase *tc_memcpy;
 
-    // Создаем новую сьюту
-    s = suite_create("memcpy_suite");
+  // Создаем новую сьюту
+  s = suite_create("memcpy_suite");
 
-    // Создаем новый тест-кейс
-    tc_memcpy = tcase_create("memcpy_tests");
+  // Создаем новый тест-кейс
+  tc_memcpy = tcase_create("memcpy_tests");
 
-    // Добавляем тесты в тест-кейс
-    tcase_add_test(tc_memcpy, test_memcpy_1);
-    tcase_add_test(tc_memcpy, test_memcpy_2);
-    tcase_add_test(tc_memcpy, test_memcpy_3);
-    tcase_add_test(tc_memcpy, test_memcpy_4);
-    tcase_add_test(tc_memcpy, test_memcpy_5);
-    tcase_add_test(tc_memcpy, test_memcpy_6);
-    tcase_add_test(tc_memcpy, test_memcpy_7);
-    tcase_add_test(tc_memcpy, test_memcpy_8);
-    tcase_add_test(tc_memcpy, test_memcpy_9);
-    tcase_add_test(tc_memcpy, test_memcpy_10);
-    tcase_add_test(tc_memcpy, test_memcpy_11);
+  // Добавляем тесты в тест-кейс
+  tcase_add_test(tc_memcpy, test_memcpy_1);
+  tcase_add_test(tc_memcpy, test_memcpy_2);
+  tcase_add_test(tc_memcpy, test_memcpy_3);
+  tcase_add_test(tc_memcpy, test_memcpy_4);
+  tcase_add_test(tc_memcpy, test_memcpy_5);
+  tcase_add_test(tc_memcpy, test_memcpy_6);
+  tcase_add_test(tc_memcpy, test_memcpy_7);
+  tcase_add_test(tc_memcpy, test_memcpy_8);
+  tcase_add_test(tc_memcpy, test_memcpy_9);
+  tcase_add_test(tc_memcpy, test_memcpy_10);
+  tcase_add_test(tc_memcpy, test_memcpy_11);
 
-    // Добавляем тест-кейс в сьюту
-    suite_add_tcase(s, tc_memcpy);
+  // Добавляем тест-кейс в сьюту
+  suite_add_tcase(s, tc_memcpy);
 
-    return s;
+  return s;
 }

@@ -1,12 +1,13 @@
 #ifndef test_string_h
 #define test_string_h
-#include "../s21_string.h"
-#include <string.h>
 #include <check.h>
-#include <stdlib.h>
-#include <wchar.h>
-#include <locale.h>
 #include <limits.h>
+#include <locale.h>
+#include <stdlib.h>
+#include <string.h>
+#include <wchar.h>
+
+#include "../s21_string.h"
 
 Suite *memchr_suite(void);
 Suite *memcmp_suite(void);
@@ -24,7 +25,6 @@ Suite *strncpy_suite(void);
 Suite *memcpy_suite(void);
 Suite *to_upper_suite(void);
 Suite *to_lower_suite(void);
-
 
 Suite *sprintf_f_suite(void);
 Suite *sprintf_i_suite(void);
@@ -49,4 +49,4 @@ Suite *sprintf_length_suite(void);
 
 Suite *sscanf_suite_d(void);
 
-#endif 
+#endif

@@ -721,7 +721,8 @@ int s21_sprintf(char *str, char *format, ...) {
 
 //   // char buffer1[100], buffer2[100000], buffer3[100], buffer4[100],
 //   // buffer5[100], buffer6[100],
-//   //     buffer7[100], buffer8[100], buffer9[100], buffer10[100], buffer11[100],
+//   //     buffer7[100], buffer8[100], buffer9[100], buffer10[100],
+//   buffer11[100],
 //   //     buffer12[100], buffer13[100], buffer14[100], buffer15[100],
 //   //     buffer16[100];
 
