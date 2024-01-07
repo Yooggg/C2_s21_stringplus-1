@@ -34,18 +34,16 @@ void cleaning(SSCANF *params) {
   }
 }
 int countDigits(void *numPtr, const char *type) {
-  int *intPtr = (int *)numPtr;
-  long int *longIntPtr = (long int *)numPtr;
-  short int *shortIntPtr = (short int *)numPtr;
-
-  int result;  // Переменная для хранения результата
+  int result = 0;  // Переменная для хранения результата
 
   if (s21_strcmp(type, "int") == 0) {
-    // Преобразование int к long int для общности кода
-    result = snprintf(NULL, 0, "%ld", (long int)(*intPtr));
+    int *intPtr = (int *)numPtr;
+    result = snprintf(NULL, 0, "%d", *intPtr);
   } else if (s21_strcmp(type, "long int") == 0) {
+    long int *longIntPtr = (long int *)numPtr;
     result = snprintf(NULL, 0, "%ld", *longIntPtr);
   } else if (s21_strcmp(type, "short int") == 0) {
+    short int *shortIntPtr = (short int *)numPtr;
     result = snprintf(NULL, 0, "%hd", *shortIntPtr);
   } else {
     // Обработка неверного типа
@@ -73,21 +71,27 @@ void *podgon_pod_znachenie(void *numPtr, const char *type, int width) {
     return NULL;
   }
 
-  while (countDigits(numPtr, type) >= width) {
-    if (s21_strcmp(type, "int") == 0) {
-      int *intPtr = (int *)numPtr;
-      *intPtr /= 10;
-    } else if (s21_strcmp(type, "long int") == 0) {
-      long int *longIntPtr = (long int *)numPtr;
-      *longIntPtr /= 10;
-    } else if (s21_strcmp(type, "short int") == 0) {
-      short int *shortIntPtr = (short int *)numPtr;
-      *shortIntPtr /= 10;
-    } else {
-      printf("Неверный тип данных\n");
-      return NULL;
+  if (s21_strcmp(type, "int") == 0) {
+    int *int_ptr = (int *)numPtr;
+    while (width <= countDigits(numPtr, "int")) {
+      *int_ptr /= 10;
+      width++;
     }
-    width++;
+  } else if (s21_strcmp(type, "long int") == 0) {
+    long int *long_ptr = (long int *)numPtr;
+    while (width <= countDigits(numPtr, "long int")) {
+      *long_ptr /= 10;
+      width++;
+    }
+  } else if (s21_strcmp(type, "short int") == 0) {
+    short int *short_ptr = (short int *)numPtr;
+    while (width <= countDigits(numPtr, "short int")) {
+      *short_ptr /= 10;
+      width++;
+    }
+  } else {
+    printf("Неверный тип данных\n");
+    return NULL;
   }
 
   return numPtr;
@@ -116,29 +120,36 @@ char *CHAR_FUNC(va_list *args, int *count, const char *str) {
   return char_ptr;
 }
 
-int *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count, const char *str) {
-  int *int_ptr;
-  short int *short_ptr;
-  char *endptr;
+void *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count, const char *str) {
+  int *int_ptr = NULL;
+  short int *short_ptr = NULL;
+  char *endptr = NULL;
   int width = Param.width;
+  void *answer_ptr = NULL;
 
   if (Param.spec == 'd') {
     if (Param.length == 0) {
+      int temp_int;
       int_ptr = va_arg(*args, int *);
-      *int_ptr = (int)strtol(str, &endptr, 10);
-      if (width < countDigits(int_ptr, "int")) {
-        int_ptr = podgon_pod_znachenie(int_ptr, "int", Param.width);
+      temp_int = (int)strtol(str, &endptr, 10);
+      *int_ptr = temp_int;
+      if (width < countDigits(&temp_int, "int")) {
+        podgon_pod_znachenie(&temp_int, "int", Param.width);
+        answer_ptr = int_ptr;
       }
     } else if (Param.length == 'h') {
+      short int temp_short;
       short_ptr = va_arg(*args, short int *);
-      *short_ptr = (short int)strtol(str, &endptr, 10);
-      if (width < countDigits(int_ptr, "int")) {
-        short_ptr = podgon_pod_znachenie(short_ptr, "short int", Param.width);
+      temp_short = (short int)strtol(str, &endptr, 10);
+      *short_ptr = temp_short;
+      if (width < countDigits(&temp_short, "short int")) {
+        podgon_pod_znachenie(&temp_short, "short int", Param.width);
+        answer_ptr = short_ptr;
       }
     }
   }
   (*count)++;
-  return int_ptr;
+  return answer_ptr;
 }
 
 int s21_sscanf(const char *str, const char *format, ...) {
@@ -167,14 +178,14 @@ int s21_sscanf(const char *str, const char *format, ...) {
         char *char_ptr = CHAR_FUNC(&args, &count, str);
         str += sizeof(*char_ptr);
       } else if (Param.spec == 'd' || Param.spec == 'i') {  // diuoxXp
-        int *int_ptr = D_SSCNAF_SPEC(Param, &args, &count, str);
-        str += countDigits(int_ptr, "int");
+        // str += countDigits(D_SSCNAF_SPEC(Param, &args, &count, str), "int");
+        int *answer = D_SSCNAF_SPEC(Param, &args, &count, str);
       }
 
       cleaning(&Param);
     }
   }
-
+  va_end(args);
   return count;
 }
 
@@ -189,3 +200,11 @@ int main() {
 
   return 0;
 }
+
+// int *podgon_pod_znachenie(int *int_ptr, SSCANF Param) {
+//   while (Param.width <= countDigits(*int_ptr) && Param.width != 0) {
+//     *int_ptr /= 10;
+//     Param.width++;
+//   }
+//   return int_ptr;
+// }
