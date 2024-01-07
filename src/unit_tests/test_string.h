@@ -47,4 +47,6 @@ Suite *sprintf_all_suite(void);
 Suite *sprintf_width_suite(void);
 Suite *sprintf_length_suite(void);
 
+Suite *sscanf_suite_d(void);
+
 #endif 

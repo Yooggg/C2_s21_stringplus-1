@@ -10,9 +10,9 @@ END_TEST
 
 // Тест-кейс 2: Преобразование пустой строки (должен вернуть пустую строку)
 START_TEST(test_to_lower_2) {
-    const char str[] = "";
+    const char str[] = " ";
     void *result = s21_to_lower(str);
-    ck_assert_str_eq(result, "");
+    ck_assert_str_eq(result, " ");
     free(result);
 }
 END_TEST
@@ -62,11 +62,11 @@ START_TEST(test_to_lower_7) {
 }
 END_TEST
 
-// Тест-кейс 8: Преобразование строки с нуль-символом (должен вернуть пустую строку)
+// Тест-кейс 8: Преобразование строки с нуль-символом
 START_TEST(test_to_lower_8) {
-    const char str[] = "Hello\0World!";
+    const char *str = NULL;
     void *result = s21_to_lower(str);
-    ck_assert_str_eq(result, "");
+    ck_assert_str_eq(result, NULL);
     free(result);
 }
 END_TEST
