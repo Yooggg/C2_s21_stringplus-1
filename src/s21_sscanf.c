@@ -62,7 +62,7 @@ int check_na_NULL(void *ptr) {
   }
   return flag;
 }
-char *s21_strchr(const char *str, int c) {
+char *s22_strchr(const char *str, int c) {
   while (*str != '\0') {
     if (*str == (char)c) {
       return (char *)str;  // нашли char, вернули адрес
@@ -140,9 +140,9 @@ int PARSER(const char *str,
                              //ДВИЖЕМСЯ,ПОКА НЕ СОБЕРЕМ СЕЦИФИКАТОР
   int shift = 1;
   while (!Param->spec) {
-    if (s21_strchr("GosexcdiuEfgXpn%", str[shift]))
+    if (s22_strchr("GosexcdiuEfgXpn%", str[shift]))
       Param->spec = str[shift];
-    else if (s21_strchr("hlL", str[shift]))
+    else if (s22_strchr("hlL", str[shift]))
       Param->length = str[shift];
     else if ('0' <= str[shift] && str[shift] <= '9')
       Param->width = Param->width * 10 + str[shift] - '0';
