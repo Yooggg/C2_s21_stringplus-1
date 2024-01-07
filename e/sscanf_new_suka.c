@@ -65,6 +65,13 @@ int countDigits(void *numPtr, const char *type) {
   return result;  // Возвращаем результат
 }
 
+int check_na_NULL(void *ptr) {
+  int flag = 0;
+  if (ptr == NULL) {
+    flag = 1;
+  }
+  return flag;
+}
 char *s21_strchr(const char *str, int c) {
   while (*str != '\0') {
     if (*str == (char)c) {
@@ -73,74 +80,67 @@ char *s21_strchr(const char *str, int c) {
     str++;
   }
 
-  // If the character is not found, return NULL
+  // ну, коль не нашли, вернем NULL
   return NULL;
 }
 int *podgon_pod_znachenie_int(int *int_ptr, int width) {
-  int number = countDigits(int_ptr, "int");
+  int flag = check_na_NULL(int_ptr);
+  if (flag != 1) {
+    int number = countDigits(int_ptr, "int");
 
-  while (width < number) {
-    *int_ptr /= 10;
-    width++;
+    while (width < number) {
+      *int_ptr /= 10;
+      width++;
+    }
   }
-
   return int_ptr;
 }
 
 long int *podgon_pod_znachenie_long_int(long int *long_ptr, int width) {
-  if (long_ptr == NULL) {
-    printf("Ошибка: неверные аргументы\n");
-    return NULL;
+  int flag = check_na_NULL(long_ptr);
+  if (flag != 1) {
+    int number = countDigits(long_ptr, "int");
+    while (width < number) {
+      *long_ptr /= 10;
+      width++;
+    }
   }
-
-  int number = countDigits(long_ptr, "int");
-  while (width < number) {
-    *long_ptr /= 10;
-    width++;
-  }
-
   return long_ptr;
 }
+
 unsigned short int *podgon_pod_znachenie_unsigned_short_int(
     unsigned short int *ushort_ptr, int width) {
-  if (ushort_ptr == NULL) {
-    printf("Ошибка: неверные аргументы\n");
-    return NULL;
+  int flag = check_na_NULL(ushort_ptr);
+  if (flag != 1) {
+    int number = countDigits(ushort_ptr, "unsigned short int");
+    while (width < number) {
+      *ushort_ptr /= 10;
+      width++;
+    }
   }
-
-  int number = countDigits(ushort_ptr, "unsigned short int");
-  while (width < number) {
-    *ushort_ptr /= 10;
-    width++;
-  }
-
   return ushort_ptr;
 }
 
 unsigned long int *podgon_pod_znachenie_unsigned_long_int(
     unsigned long int *ulong_ptr, int width) {
-  if (ulong_ptr == NULL) {
-    printf("Ошибка: неверные аргументы\n");
-    return NULL;
+  int flag = check_na_NULL(ulong_ptr);
+  if (flag != 1) {
+    int number = countDigits(ulong_ptr, "unsigned long int");
+    while (width < number) {
+      *ulong_ptr /= 10;
+      width++;
+    }
   }
-
-  int number = countDigits(ulong_ptr, "unsigned long int");
-  while (width < number) {
-    *ulong_ptr /= 10;
-    width++;
-  }
-
   return ulong_ptr;
 }
 short int *podgon_pod_znachenie_short_int(short int *short_ptr, int width) {
-  if (short_ptr == NULL) {
-    printf("Ошибка: неверные аргументы\n");
-    return NULL;
-  }
-  int number = countDigits(short_ptr, "short int");
-  while (width < number) {
-    *short_ptr /= 10;
-    width++;
+  int flag = check_na_NULL(short_ptr);
+  if (flag != 1) {
+    int number = countDigits(short_ptr, "short int");
+    while (width < number) {
+      *short_ptr /= 10;
+      width++;
+    }
   }
 
   return short_ptr;
