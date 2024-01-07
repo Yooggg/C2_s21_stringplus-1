@@ -65,36 +65,49 @@ char *s21_strchr(const char *str, int c) {
   // If the character is not found, return NULL
   return NULL;
 }
-void *podgon_pod_znachenie(void *numPtr, const char *type, int width) {
-  if (numPtr == NULL || width <= 0) {
+int *podgon_pod_znachenie_int(int *int_ptr, int width) {
+  int number = countDigits(int_ptr, "int");
+  printf("int ptr %d\n", *int_ptr);
+
+  printf("digits %d\n", countDigits(int_ptr, "int"));
+
+  while (width < number) {
+    *int_ptr /= 10;
+    width++;
+    printf("chlen\n");
+  }
+
+  return int_ptr;
+}
+
+long int *podgon_pod_znachenie_long_int(long int *long_ptr, int width) {
+  if (long_ptr == NULL) {
     printf("Ошибка: неверные аргументы\n");
     return NULL;
   }
 
-  if (s21_strcmp(type, "int") == 0) {
-    int *int_ptr = (int *)numPtr;
-    while (width <= countDigits(numPtr, "int")) {
-      *int_ptr /= 10;
-      width++;
-    }
-  } else if (s21_strcmp(type, "long int") == 0) {
-    long int *long_ptr = (long int *)numPtr;
-    while (width <= countDigits(numPtr, "long int")) {
-      *long_ptr /= 10;
-      width++;
-    }
-  } else if (s21_strcmp(type, "short int") == 0) {
-    short int *short_ptr = (short int *)numPtr;
-    while (width <= countDigits(numPtr, "short int")) {
-      *short_ptr /= 10;
-      width++;
-    }
-  } else {
-    printf("Неверный тип данных\n");
-    return NULL;
+  int number = countDigits(long_ptr, "int");
+  while (width < number) {
+    *long_ptr /= 10;
+    width++;
   }
 
-  return numPtr;
+  return long_ptr;
+}
+
+short int *podgon_pod_znachenie_short_int(short int *short_ptr, int width) {
+  if (short_ptr == NULL) {
+    printf("Ошибка: неверные аргументы\n");
+    return NULL;
+  }
+  printf("answer%hd\n", *short_ptr);
+  int number = countDigits(short_ptr, "short int");
+  while (width < number) {
+    *short_ptr /= 10;
+    width++;
+  }
+
+  return short_ptr;
 }
 int PARSER(const char *str,
            SSCANF *Param) {  //ЗДЕСЬ МЫ ПЕРЕДАЕМ ФОРМАТНУЮ СТРОКУ И
@@ -120,36 +133,79 @@ char *CHAR_FUNC(va_list *args, int *count, const char *str) {
   return char_ptr;
 }
 
-void *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count, const char *str) {
+int *JUST_D(SSCANF Param, va_list *args, int *count, const char *str) {
+  int *int_ptr = NULL;
+  char *endptr = NULL;
+  if (Param.length == 0) {
+    int_ptr = va_arg(*args, int *);
+    *int_ptr = (int)strtol(str, &endptr, 10);
+    printf("otvet %d\n", *int_ptr);
+    // printf("digits %d\n",countDigits(int_ptr, "int"));
+    printf("int %d\n", Param.width);
+
+    if (Param.width < countDigits(int_ptr, "int") && Param.width != 0) {
+      podgon_pod_znachenie_int(int_ptr, Param.width);
+    }
+  }
+  (*count)++;
+  return int_ptr;
+}
+long int *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count,
+                        const char *str) {
   int *int_ptr = NULL;
   short int *short_ptr = NULL;
   char *endptr = NULL;
   int width = Param.width;
-  void *answer_ptr = NULL;
+  long int *answer_ptr = NULL;
 
   if (Param.spec == 'd') {
     if (Param.length == 0) {
-      int temp_int;
       int_ptr = va_arg(*args, int *);
-      temp_int = (int)strtol(str, &endptr, 10);
-      *int_ptr = temp_int;
-      if (width < countDigits(&temp_int, "int")) {
-        podgon_pod_znachenie(&temp_int, "int", Param.width);
-        answer_ptr = int_ptr;
+      *int_ptr = (int)strtol(str, &endptr, 10);
+      if (width < countDigits(int_ptr, "int")) {
+        podgon_pod_znachenie_int(int_ptr, Param.width);
+        // answer_ptr = int_ptr;
       }
     } else if (Param.length == 'h') {
-      short int temp_short;
       short_ptr = va_arg(*args, short int *);
-      temp_short = (short int)strtol(str, &endptr, 10);
-      *short_ptr = temp_short;
-      if (width < countDigits(&temp_short, "short int")) {
-        podgon_pod_znachenie(&temp_short, "short int", Param.width);
-        answer_ptr = short_ptr;
+      *short_ptr = (short int)strtol(str, &endptr, 10);
+      if (width < countDigits(short_ptr, "short int")) {
+        podgon_pod_znachenie_short_int(short_ptr, Param.width);
+        // answer_ptr = short_ptr;
       }
     }
   }
   (*count)++;
   return answer_ptr;
+}
+short int *D_WITH_H(SSCANF Param, va_list *args, int *count, const char *str) {
+  short int *short_ptr = NULL;
+  char *endptr = NULL;
+
+  if (Param.length == 'h') {
+    short_ptr = va_arg(*args, short int *);
+    *short_ptr = (short int)strtol(str, &endptr, 10);
+    if (Param.width < countDigits(short_ptr, "short int") && Param.width != 0) {
+      podgon_pod_znachenie_short_int(short_ptr, Param.width);
+    }
+  }
+  (*count)++;
+  return short_ptr;
+}
+
+long int *D_WITH_L(SSCANF Param, va_list *args, int *count, const char *str) {
+  long int *long_ptr = NULL;
+  char *endptr = NULL;
+
+  if (Param.length == 'l') {
+    long_ptr = va_arg(*args, long int *);
+    *long_ptr = strtol(str, &endptr, 10);
+    if (Param.width < countDigits(long_ptr, "long int") && Param.width != 0) {
+      podgon_pod_znachenie_long_int(long_ptr, Param.width);
+    }
+  }
+  (*count)++;
+  return long_ptr;
 }
 
 int s21_sscanf(const char *str, const char *format, ...) {
@@ -178,8 +234,19 @@ int s21_sscanf(const char *str, const char *format, ...) {
         char *char_ptr = CHAR_FUNC(&args, &count, str);
         str += sizeof(*char_ptr);
       } else if (Param.spec == 'd' || Param.spec == 'i') {  // diuoxXp
-        // str += countDigits(D_SSCNAF_SPEC(Param, &args, &count, str), "int");
-        int *answer = D_SSCNAF_SPEC(Param, &args, &count, str);
+
+        if (Param.length == 0) {
+          format++;
+          int *answer = JUST_D(Param, &args, &count, str);
+          str += countDigits(answer, "int");
+          printf("str %c\n", *str);
+        } else if (Param.length == 'h') {
+          short int *answer = D_WITH_H(Param, &args, &count, str);
+          str += countDigits(answer, "short int");
+        } else if (Param.length == 'l') {
+          long int *answer = D_WITH_L(Param, &args, &count, str);
+          str += countDigits(answer, "long int");
+        }
       }
 
       cleaning(&Param);
@@ -191,20 +258,12 @@ int s21_sscanf(const char *str, const char *format, ...) {
 
 int main() {
   int number1 = 0;
-  char number2;
-  const char *input = "123 3565";
-  int result = s21_sscanf(input, "%3d %c", &number1, &number2);
+  int number2 = 0;
+  const char *input = "123456 789";
+  int result = s21_sscanf(input, "%1ld %2hd", &number1, &number2);
 
   printf("Result: %d\n", result);
-  printf("Buffer: %d %c\n", number1, number2);
+  printf("Buffer: %d %d\n", number1, number2);
 
   return 0;
 }
-
-// int *podgon_pod_znachenie(int *int_ptr, SSCANF Param) {
-//   while (Param.width <= countDigits(*int_ptr) && Param.width != 0) {
-//     *int_ptr /= 10;
-//     Param.width++;
-//   }
-//   return int_ptr;
-// }
