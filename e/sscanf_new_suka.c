@@ -45,7 +45,18 @@ int countDigits(void *numPtr, const char *type) {
   } else if (s21_strcmp(type, "short int") == 0) {
     short int *shortIntPtr = (short int *)numPtr;
     result = snprintf(NULL, 0, "%hd", *shortIntPtr);
-  } else {
+  } else if (s21_strcmp(type, "unsigned int") == 0) {
+    unsigned int *uIntPtr = (unsigned int *)numPtr;
+    result = snprintf(NULL, 0, "%u", *uIntPtr);
+  } else if (s21_strcmp(type, "unsigned short int") == 0) {
+    unsigned short int *uhIntPtr = (unsigned short int *)numPtr;
+    result = snprintf(NULL, 0, "%hu", *uhIntPtr);
+  } else if (s21_strcmp(type, "unsigned long int") == 0) {
+    unsigned long int *ulIntPtr = (unsigned long int *)numPtr;
+    result = snprintf(NULL, 0, "%lu", *ulIntPtr);
+  }
+
+  else {
     // Обработка неверного типа
     printf("Неверный тип данных\n");
     result = -1;
@@ -67,14 +78,10 @@ char *s21_strchr(const char *str, int c) {
 }
 int *podgon_pod_znachenie_int(int *int_ptr, int width) {
   int number = countDigits(int_ptr, "int");
-  printf("int ptr %d\n", *int_ptr);
-
-  printf("digits %d\n", countDigits(int_ptr, "int"));
 
   while (width < number) {
     *int_ptr /= 10;
     width++;
-    printf("chlen\n");
   }
 
   return int_ptr;
@@ -94,13 +101,42 @@ long int *podgon_pod_znachenie_long_int(long int *long_ptr, int width) {
 
   return long_ptr;
 }
+unsigned short int *podgon_pod_znachenie_unsigned_short_int(
+    unsigned short int *ushort_ptr, int width) {
+  if (ushort_ptr == NULL) {
+    printf("Ошибка: неверные аргументы\n");
+    return NULL;
+  }
 
+  int number = countDigits(ushort_ptr, "unsigned short int");
+  while (width < number) {
+    *ushort_ptr /= 10;
+    width++;
+  }
+
+  return ushort_ptr;
+}
+
+unsigned long int *podgon_pod_znachenie_unsigned_long_int(
+    unsigned long int *ulong_ptr, int width) {
+  if (ulong_ptr == NULL) {
+    printf("Ошибка: неверные аргументы\n");
+    return NULL;
+  }
+
+  int number = countDigits(ulong_ptr, "unsigned long int");
+  while (width < number) {
+    *ulong_ptr /= 10;
+    width++;
+  }
+
+  return ulong_ptr;
+}
 short int *podgon_pod_znachenie_short_int(short int *short_ptr, int width) {
   if (short_ptr == NULL) {
     printf("Ошибка: неверные аргументы\n");
     return NULL;
   }
-  printf("answer%hd\n", *short_ptr);
   int number = countDigits(short_ptr, "short int");
   while (width < number) {
     *short_ptr /= 10;
@@ -139,9 +175,6 @@ int *JUST_D(SSCANF Param, va_list *args, int *count, const char *str) {
   if (Param.length == 0) {
     int_ptr = va_arg(*args, int *);
     *int_ptr = (int)strtol(str, &endptr, 10);
-    printf("otvet %d\n", *int_ptr);
-    // printf("digits %d\n",countDigits(int_ptr, "int"));
-    printf("int %d\n", Param.width);
 
     if (Param.width < countDigits(int_ptr, "int") && Param.width != 0) {
       podgon_pod_znachenie_int(int_ptr, Param.width);
@@ -150,34 +183,7 @@ int *JUST_D(SSCANF Param, va_list *args, int *count, const char *str) {
   (*count)++;
   return int_ptr;
 }
-long int *D_SSCNAF_SPEC(SSCANF Param, va_list *args, int *count,
-                        const char *str) {
-  int *int_ptr = NULL;
-  short int *short_ptr = NULL;
-  char *endptr = NULL;
-  int width = Param.width;
-  long int *answer_ptr = NULL;
 
-  if (Param.spec == 'd') {
-    if (Param.length == 0) {
-      int_ptr = va_arg(*args, int *);
-      *int_ptr = (int)strtol(str, &endptr, 10);
-      if (width < countDigits(int_ptr, "int")) {
-        podgon_pod_znachenie_int(int_ptr, Param.width);
-        // answer_ptr = int_ptr;
-      }
-    } else if (Param.length == 'h') {
-      short_ptr = va_arg(*args, short int *);
-      *short_ptr = (short int)strtol(str, &endptr, 10);
-      if (width < countDigits(short_ptr, "short int")) {
-        podgon_pod_znachenie_short_int(short_ptr, Param.width);
-        // answer_ptr = short_ptr;
-      }
-    }
-  }
-  (*count)++;
-  return answer_ptr;
-}
 short int *D_WITH_H(SSCANF Param, va_list *args, int *count, const char *str) {
   short int *short_ptr = NULL;
   char *endptr = NULL;
@@ -208,6 +214,54 @@ long int *D_WITH_L(SSCANF Param, va_list *args, int *count, const char *str) {
   return long_ptr;
 }
 
+unsigned int *JUST_U(SSCANF Param, va_list *args, int *count, const char *str) {
+  unsigned int *uint_ptr = NULL;
+  char *endptr = NULL;
+
+  if (Param.length == 0) {
+    uint_ptr = va_arg(*args, unsigned int *);
+    *uint_ptr = (unsigned int)strtoul(str, &endptr, 10);
+
+    if (Param.width < countDigits(uint_ptr, "int") && Param.width != 0) {
+      // Если указана ширина, подгоняем значение
+      podgon_pod_znachenie_int((int *)uint_ptr, Param.width);
+    }
+  }
+  (*count)++;
+  return uint_ptr;
+}
+unsigned short int *U_WITH_H(SSCANF Param, va_list *args, int *count,
+                             const char *str) {
+  unsigned short int *ushort_ptr = NULL;
+  char *endptr = NULL;
+
+  if (Param.length == 'h') {
+    ushort_ptr = va_arg(*args, unsigned short int *);
+    *ushort_ptr = (unsigned short int)strtoul(str, &endptr, 10);
+    if (Param.width < countDigits(ushort_ptr, "unsigned short int") &&
+        Param.width != 0) {
+      podgon_pod_znachenie_unsigned_short_int(ushort_ptr, Param.width);
+    }
+  }
+  (*count)++;
+  return ushort_ptr;
+}
+unsigned long int *U_WITH_L(SSCANF Param, va_list *args, int *count,
+                            const char *str) {
+  unsigned long int *ulong_ptr = NULL;
+  char *endptr = NULL;
+
+  if (Param.length == 'l') {
+    ulong_ptr = va_arg(*args, unsigned long int *);
+    *ulong_ptr = strtoul(str, &endptr, 10);
+    if (Param.width < countDigits(ulong_ptr, "unsigned long int") &&
+        Param.width != 0) {
+      podgon_pod_znachenie_unsigned_long_int(ulong_ptr, Param.width);
+    }
+  }
+  (*count)++;
+  return ulong_ptr;
+}
 int s21_sscanf(const char *str, const char *format, ...) {
   va_list args;
   int count = 0;
@@ -236,16 +290,25 @@ int s21_sscanf(const char *str, const char *format, ...) {
       } else if (Param.spec == 'd' || Param.spec == 'i') {  // diuoxXp
 
         if (Param.length == 0) {
-          format++;
           int *answer = JUST_D(Param, &args, &count, str);
           str += countDigits(answer, "int");
-          printf("str %c\n", *str);
         } else if (Param.length == 'h') {
           short int *answer = D_WITH_H(Param, &args, &count, str);
           str += countDigits(answer, "short int");
         } else if (Param.length == 'l') {
           long int *answer = D_WITH_L(Param, &args, &count, str);
           str += countDigits(answer, "long int");
+        }
+      } else if (Param.spec == 'u') {
+        if (Param.length == 0) {
+          unsigned int *answer = JUST_U(Param, &args, &count, str);
+          str += countDigits(answer, "unsigned int");
+        } else if (Param.length == 'h') {
+          unsigned short int *answer = U_WITH_H(Param, &args, &count, str);
+          str += countDigits(answer, "unsigned short int");
+        } else if (Param.length == 'l') {
+          unsigned long int *answer = U_WITH_L(Param, &args, &count, str);
+          str += countDigits(answer, "unsigned long int");
         }
       }
 
@@ -257,13 +320,15 @@ int s21_sscanf(const char *str, const char *format, ...) {
 }
 
 int main() {
-  int number1 = 0;
-  int number2 = 0;
-  const char *input = "123456 789";
-  int result = s21_sscanf(input, "%1ld %2hd", &number1, &number2);
+  unsigned int uint_val = 0;
+  unsigned short int ushort_val = 0;
+  unsigned long int ulong_val = 0;
+
+  const char *input = "123";
+  int result = s21_sscanf(input, "%2hu", &ushort_val);
 
   printf("Result: %d\n", result);
-  printf("Buffer: %d %d\n", number1, number2);
+  printf("Buffer: %hu\n", ushort_val);
 
   return 0;
 }
