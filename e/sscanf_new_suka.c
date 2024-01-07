@@ -262,6 +262,32 @@ unsigned long int *U_WITH_L(SSCANF Param, va_list *args, int *count,
   (*count)++;
   return ulong_ptr;
 }
+
+int *O_SPEC(va_list *args, int *count, const char *str) {
+  int *oint_ptr = va_arg(*args, int *);
+  char *endptr = NULL;
+  *oint_ptr = strtol(str, &endptr, 8);
+  (*count)++;
+  return oint_ptr;
+}
+unsigned int *X_SPEC(va_list *args, int *count, const char *str) {
+  unsigned int *xint_ptr = va_arg(*args, unsigned int *);
+  char *endptr = NULL;
+  *xint_ptr = strtol(str, &endptr, 16);
+  (*count)++;
+  return xint_ptr;
+}
+
+void *P_SPEC(va_list *args, int *count, const char *str, int *a) {
+  char *endptr;
+  void **void_ptr = va_arg(*args, void **);
+  *void_ptr = (void *)strtoul(str, &endptr, 16);
+  *a += endptr - str;
+  (*count)++;
+
+  return void_ptr;
+}
+
 int s21_sscanf(const char *str, const char *format, ...) {
   va_list args;
   int count = 0;
@@ -310,6 +336,16 @@ int s21_sscanf(const char *str, const char *format, ...) {
           unsigned long int *answer = U_WITH_L(Param, &args, &count, str);
           str += countDigits(answer, "unsigned long int");
         }
+      } else if (Param.spec == 'o') {
+        int *o_ptr = O_SPEC(&args, &count, str);
+        str += countDigits(o_ptr, "int");
+      } else if (Param.spec == 'x' || Param.spec == 'X') {
+        unsigned int *x_ptr = X_SPEC(&args, &count, str);
+        str += countDigits(x_ptr, "unsigned int");
+      } else if (Param.spec == 'p') {
+        int prohod = 0;
+        P_SPEC(&args, &count, str, &prohod);
+        str += prohod;
       }
 
       cleaning(&Param);
@@ -320,15 +356,12 @@ int s21_sscanf(const char *str, const char *format, ...) {
 }
 
 int main() {
-  unsigned int uint_val = 0;
-  unsigned short int ushort_val = 0;
-  unsigned long int ulong_val = 0;
-
-  const char *input = "123";
-  int result = s21_sscanf(input, "%2hu", &ushort_val);
-
-  printf("Result: %d\n", result);
-  printf("Buffer: %hu\n", ushort_val);
-
+  void *ptr1 = NULL;
+  void *ptr2 = NULL;
+  const char *input = "0x7fff12345678 0x7fff87654321";
+  int result = sscanf(input, "%p %p", &ptr1, &ptr2);
+  printf("Результат: %d\n", result);
+  printf("Первый адрес: %p\n", ptr1);
+  printf("Второй адрес: %p\n", ptr2);
   return 0;
 }
