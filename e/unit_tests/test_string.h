@@ -11,5 +11,6 @@
 Suite *strlen_suite(void);
 Suite *to_upper_suite(void);
 Suite *to_lower_suite(void);
+Suite *sscanf_suite_d(void);
 
 #endif 

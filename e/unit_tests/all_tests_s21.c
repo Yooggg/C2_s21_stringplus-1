@@ -17,6 +17,8 @@ void make_the_test(Suite *test_to_run, int *tests_counter) {
 int main() {
 
     Suite *s21_function_massive[] = {
+              sscanf_suite_d(),
+
         // memchr_suite(),
         // memcmp_suite(),
         // strchr_suite(),
