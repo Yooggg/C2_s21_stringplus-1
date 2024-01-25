@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Обычное целое число
 START_TEST(s21_sprintf_d_1) {
   char result[50];
   int value = 42;
@@ -14,7 +13,6 @@ START_TEST(s21_sprintf_d_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Отрицательное целое число
 START_TEST(s21_sprintf_d_2) {
   char result[50];
   int value = -123;
@@ -28,7 +26,6 @@ START_TEST(s21_sprintf_d_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Целое число с нулем
 START_TEST(s21_sprintf_d_3) {
   char result[50];
   int value = 0;
@@ -42,7 +39,6 @@ START_TEST(s21_sprintf_d_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Максимальное целое число
 START_TEST(s21_sprintf_d_4) {
   char result[50];
   int value = INT_MAX;
@@ -56,7 +52,6 @@ START_TEST(s21_sprintf_d_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Минимальное целое число
 START_TEST(s21_sprintf_d_5) {
   char result[50];
   int value = INT_MIN;

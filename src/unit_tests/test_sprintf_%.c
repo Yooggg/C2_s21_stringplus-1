@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Простой случай с одним параметром
 START_TEST(s21_sprintf_percent_1) {
   char buffer[50];
   int standard_result = sprintf(buffer, "This is a %% character");
@@ -13,7 +12,6 @@ START_TEST(s21_sprintf_percent_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Проверка совпадения с другими символами
 START_TEST(s21_sprintf_percent_2) {
   char buffer[50];
   int standard_result = sprintf(buffer, "123%%456");
@@ -26,7 +24,6 @@ START_TEST(s21_sprintf_percent_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Процент в середине строки
 START_TEST(s21_sprintf_percent_3) {
   char buffer[50];
   int standard_result = sprintf(buffer, "This is %% a test");
@@ -39,7 +36,6 @@ START_TEST(s21_sprintf_percent_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Два подряд идущих процента
 START_TEST(s21_sprintf_percent_4) {
   char buffer[50];
   int standard_result =
@@ -54,7 +50,6 @@ START_TEST(s21_sprintf_percent_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Пустой формат с процентом
 START_TEST(s21_sprintf_percent_5) {
   char buffer[50];
   int standard_result = sprintf(buffer, "This is a percent: %%");

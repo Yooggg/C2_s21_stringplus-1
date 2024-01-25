@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Тест для спецификатора %e с положительным значением
 START_TEST(s21_sprintf_e_1) {
   char result[50];
   double value = 1234.5678;
@@ -14,7 +13,6 @@ START_TEST(s21_sprintf_e_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Тест для спецификатора %e с отрицательным значением
 START_TEST(s21_sprintf_e_2) {
   char result[50];
   double value = -9876.54321;
@@ -28,7 +26,6 @@ START_TEST(s21_sprintf_e_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Тест для спецификатора %e с нулевым значением
 START_TEST(s21_sprintf_e_3) {
   char result[50];
   double value = 0.0;
@@ -42,7 +39,6 @@ START_TEST(s21_sprintf_e_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Тест для спецификатора %e с максимальным положительным значением
 START_TEST(s21_sprintf_e_4) {
   char result[50];
   double value = INT32_MAX;
@@ -56,7 +52,6 @@ START_TEST(s21_sprintf_e_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Тест для спецификатора %e с минимальным положительным значением
 START_TEST(s21_sprintf_e_5) {
   char result[50];
   double value = DBL_MIN;

@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Поиск первого вхождения символа из accept в str
 START_TEST(strpbrk_1) {
   char str[] = "abcdef";
   char accept[] = "xyz";
@@ -9,7 +8,6 @@ START_TEST(strpbrk_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Поиск первого вхождения символа из accept в str (пустой accept)
 START_TEST(strpbrk_2) {
   char str[] = "abcdef";
   char accept[] = "";
@@ -18,7 +16,6 @@ START_TEST(strpbrk_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Поиск первого вхождения символа из accept в str (пустой str)
 START_TEST(strpbrk_3) {
   char str[] = "";
   char accept[] = "xyz";
@@ -27,8 +24,6 @@ START_TEST(strpbrk_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Поиск первого вхождения символа из accept в str (пустой str и
-// accept)
 START_TEST(strpbrk_4) {
   char str[] = "";
   char accept[] = "";
@@ -37,8 +32,6 @@ START_TEST(strpbrk_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Поиск первого вхождения символа из accept в str (символы и
-// цифры)
 START_TEST(strpbrk_5) {
   char str[] = "Hello123!";
   char accept[] = "0123456789";
@@ -47,7 +40,6 @@ START_TEST(strpbrk_5) {
 }
 END_TEST
 
-// Тест-кейс 6: Поиск первого вхождения символа из accept в str (русские буквы)
 START_TEST(strpbrk_6) {
   char str[] = "Привет, мир!";
   char accept[] = "ртмиве";
@@ -56,8 +48,6 @@ START_TEST(strpbrk_6) {
 }
 END_TEST
 
-// Тест-кейс 7: Поиск первого вхождения символа из accept в str (специальные
-// символы)
 START_TEST(strpbrk_7) {
   char str[] = "@#$%Hello!";
   char accept[] = "!@#$%";
@@ -66,8 +56,6 @@ START_TEST(strpbrk_7) {
 }
 END_TEST
 
-// Тест-кейс 8: Поиск первого вхождения символа из accept в str (совпадение в
-// начале)
 START_TEST(strpbrk_8) {
   char str[] = "abcdef";
   char accept[] = "abcxyz";
@@ -76,8 +64,6 @@ START_TEST(strpbrk_8) {
 }
 END_TEST
 
-// Тест-кейс 9: Поиск первого вхождения символа из accept в str (совпадение в
-// конце)
 START_TEST(strpbrk_9) {
   char str[] = "abcdef";
   char accept[] = "xyzabc";
@@ -86,8 +72,6 @@ START_TEST(strpbrk_9) {
 }
 END_TEST
 
-// Тест-кейс 10: Поиск первого вхождения символа из accept в str (совпадение в
-// середине)
 START_TEST(strpbrk_10) {
   char str[] = "abcdef";
   char accept[] = "xyzcde";

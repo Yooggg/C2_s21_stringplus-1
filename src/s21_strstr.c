@@ -1,4 +1,5 @@
 #include "s21_string.h"
+
 char *s21_strstr(const char *haystack, const char *needle) {
   size_t res = s21_strlen(needle);
   if (res == 1) {
@@ -29,5 +30,5 @@ char *s21_strstr(const char *haystack, const char *needle) {
     haystack++;
     needle = temp2;
   }
-  return NULL;
+  return s21_NULL;
 }

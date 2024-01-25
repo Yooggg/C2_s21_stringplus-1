@@ -1,7 +1,5 @@
-
 #include "test_string.h"
 
-// Тест-кейс 1: Обычное положительное число
 START_TEST(s21_sprintf_i_1) {
   char result[50];
   int value = 12345;
@@ -15,7 +13,6 @@ START_TEST(s21_sprintf_i_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Отрицательное число
 START_TEST(s21_sprintf_i_2) {
   char result[50];
   int value = -54321;
@@ -29,7 +26,6 @@ START_TEST(s21_sprintf_i_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Ноль
 START_TEST(s21_sprintf_i_3) {
   char result[50];
   int value = 0;
@@ -43,7 +39,6 @@ START_TEST(s21_sprintf_i_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Максимальное положительное значение для int
 START_TEST(s21_sprintf_i_4) {
   char result[50];
   int value = INT_MAX;
@@ -57,7 +52,6 @@ START_TEST(s21_sprintf_i_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Минимальное отрицательное значение для int
 START_TEST(s21_sprintf_i_5) {
   char result[50];
   int value = INT_MIN;

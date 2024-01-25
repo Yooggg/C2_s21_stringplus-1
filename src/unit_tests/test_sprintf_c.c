@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Обычный символ
 START_TEST(s21_sprintf_c_1) {
   char result[50];
   char value = 'A';
@@ -14,7 +13,6 @@ START_TEST(s21_sprintf_c_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Спецсимвол
 START_TEST(s21_sprintf_c_2) {
   char result[50];
   char value = '\t';
@@ -28,7 +26,6 @@ START_TEST(s21_sprintf_c_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Новая строка
 START_TEST(s21_sprintf_c_3) {
   char result[50];
   char value = '\n';
@@ -42,7 +39,6 @@ START_TEST(s21_sprintf_c_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Символ с максимальным ASCII-кодом
 START_TEST(s21_sprintf_c_4) {
   char result[50];
   char value = 127;
@@ -56,7 +52,6 @@ START_TEST(s21_sprintf_c_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Символ с минимальным ASCII-кодом
 START_TEST(s21_sprintf_c_5) {
   char result[50];
   char value = 0;

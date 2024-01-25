@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Начальный сегмент, полностью соответствующий accept
 START_TEST(strcspn_1) {
   char str[] = "abcdef";
   char accept[] = "abcdef";
@@ -9,7 +8,6 @@ START_TEST(strcspn_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Начальный сегмент, частично соответствующий accept
 START_TEST(strcspn_2) {
   char str[] = "abcdef";
   char accept[] = "abc";
@@ -18,7 +16,6 @@ START_TEST(strcspn_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Начальный сегмент, полностью не соответствующий accept
 START_TEST(strcspn_3) {
   char str[] = "abcdef";
   char accept[] = "xyz";
@@ -27,8 +24,6 @@ START_TEST(strcspn_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Начальный сегмент, полностью соответствующий accept (пустой
-// accept)
 START_TEST(strcspn_4) {
   char str[] = "abcdef";
   char accept[] = "";
@@ -37,8 +32,6 @@ START_TEST(strcspn_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Начальный сегмент, полностью соответствующий accept (str и
-// accept пустые)
 START_TEST(strcspn_5) {
   char str[] = "";
   char accept[] = "";
@@ -47,7 +40,6 @@ START_TEST(strcspn_5) {
 }
 END_TEST
 
-// Тест-кейс 6: Начальный сегмент, частично соответствующий accept (пустой str)
 START_TEST(strcspn_6) {
   char str[] = "";
   char accept[] = "abc";
@@ -56,8 +48,6 @@ START_TEST(strcspn_6) {
 }
 END_TEST
 
-// Тест-кейс 7: Начальный сегмент, полностью соответствующий accept (пробелы в
-// accept)
 START_TEST(strcspn_7) {
   char str[] = "   Hello, World!";
   char accept[] = " ";
@@ -66,8 +56,6 @@ START_TEST(strcspn_7) {
 }
 END_TEST
 
-// Тест-кейс 8: Начальный сегмент, частично соответствующий accept (цифры и
-// символы)
 START_TEST(strcspn_8) {
   char str[] = "123abc";
   char accept[] = "0123456789";
@@ -76,8 +64,6 @@ START_TEST(strcspn_8) {
 }
 END_TEST
 
-// Тест-кейс 9: Начальный сегмент, частично соответствующий accept (русские
-// буквы)
 START_TEST(strcspn_9) {
   char str[] = "Привет, мир!";
   char accept[] = "ртмиве";
@@ -86,8 +72,6 @@ START_TEST(strcspn_9) {
 }
 END_TEST
 
-// Тест-кейс 10: Начальный сегмент, частично соответствующий accept (специальные
-// символы)
 START_TEST(strcspn_10) {
   char str[] = "@#$%Hello!";
   char accept[] = "!@#$%";

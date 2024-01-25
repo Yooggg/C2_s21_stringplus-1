@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Длина - короткое целое число
 START_TEST(s21_sprintf_length_1) {
   short value = 32767;
   char buffer[100];
@@ -14,7 +13,6 @@ START_TEST(s21_sprintf_length_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Длина - длинное целое число
 START_TEST(s21_sprintf_length_2) {
   long value = 2147483647L;
   char buffer[100];
@@ -28,7 +26,6 @@ START_TEST(s21_sprintf_length_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Длина - без знаковое длинное целое число
 START_TEST(s21_sprintf_length_3) {
   unsigned long value = 4294967295UL;
   char buffer[100];
@@ -42,7 +39,6 @@ START_TEST(s21_sprintf_length_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Длина - длинное число с плавающей точкой
 START_TEST(s21_sprintf_length_4) {
   long double value = 3.141592653589793238462643383279502884L;
   char buffer[100];
@@ -56,7 +52,6 @@ START_TEST(s21_sprintf_length_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Длина - шестнадцатеричное представление указателя
 START_TEST(s21_sprintf_length_5) {
   void *pointer = (void *)0xabcdef;
   char buffer[100];

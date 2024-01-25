@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Обычное число с плавающей запятой
 START_TEST(s21_sprintf_f_1) {
   char result[50];
   double value = 42.567;
@@ -14,7 +13,6 @@ START_TEST(s21_sprintf_f_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Отрицательное число с плавающей запятой
 START_TEST(s21_sprintf_f_2) {
   char result[50];
   double value = -123.456;
@@ -28,7 +26,6 @@ START_TEST(s21_sprintf_f_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Число с плавающей запятой, равное нулю
 START_TEST(s21_sprintf_f_3) {
   char result[50];
   double value = 0.0;
@@ -42,7 +39,6 @@ START_TEST(s21_sprintf_f_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Минимальное положительное значение для double
 START_TEST(s21_sprintf_f_4) {
   char result[50];
   double value = DBL_MIN;
@@ -56,7 +52,6 @@ START_TEST(s21_sprintf_f_4) {
 }
 END_TEST
 
-//Тестик на макс инт
 START_TEST(s21_sprintf_f_5) {
   char result[50];
   double value = INT32_MAX;

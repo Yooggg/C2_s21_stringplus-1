@@ -4,7 +4,6 @@
 
 #include "test_string.h"
 
-// Тест-кейс 1: Обычная строка
 START_TEST(s21_sprintf_s_1) {
   char result[50];
   const char *value = "Hello, World!";
@@ -18,7 +17,6 @@ START_TEST(s21_sprintf_s_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Пустая строка
 START_TEST(s21_sprintf_s_2) {
   char result[50];
   const char *value = "";
@@ -32,7 +30,6 @@ START_TEST(s21_sprintf_s_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Строка с пробелами
 START_TEST(s21_sprintf_s_3) {
   char result[50];
   const char *value = "   Spaces   ";
@@ -46,7 +43,6 @@ START_TEST(s21_sprintf_s_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Строка с числами
 START_TEST(s21_sprintf_s_4) {
   char result[50];
   const char *value = "12345";
@@ -60,7 +56,6 @@ START_TEST(s21_sprintf_s_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Строка с спецсимволами
 START_TEST(s21_sprintf_s_5) {
   char result[50];
   const char *value = "!@#$%^&*()_+";

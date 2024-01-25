@@ -1,84 +1,102 @@
-#include <string.h>
-
 #include "test_string.h"
 
 START_TEST(strncat_1) {
-  char dest[20] = "Hello, ";
+  char dest1[20] = "Hello, ";
+  char dest2[20] = "Hello, ";
   const char src[] = "World!";
-  s21_strncat(dest, src, 20);
-  ck_assert_str_eq(dest, "Hello, World!");
+  s21_strncat(dest1, src, 20);
+  strncat(dest2, src, 19);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_2) {
-  char dest[20] = "Hello, ";
+  char dest1[20] = "Hello, ";
+  char dest2[20] = "Hello, ";
   const char src[] = "World!";
-  s21_strncat(dest, src, 3);
-  ck_assert_str_eq(dest, "Hello, Wor");
+  s21_strncat(dest1, src, 3);
+  strncat(dest2, src, 3);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_3) {
-  char dest[20] = "abc";
+  char dest1[20] = "abc";
+  char dest2[20] = "abc";
   const char src[] = "\0def";
-  s21_strncat(dest, src, 6);
-  ck_assert_mem_eq(dest, "abc\0def", 6);
+  s21_strncat(dest1, src, 6);
+  strncat(dest2, src, 6);
+  ck_assert_mem_eq(dest1, dest2, 6);
 }
 END_TEST
 
 START_TEST(strncat_4) {
-  char dest[20] = "Testing";
+  char dest1[20] = "Testing";
+  char dest2[20] = "Testing";
   const char src[] = "123";
-  s21_strncat(dest, src, 5);
-  ck_assert_str_eq(dest, "Testi123");
+  s21_strncat(dest1, src, 5);
+  strncat(dest2, src, 5);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_5) {
-  char dest[20] = "";
+  char dest1[20] = "";
+  char dest2[20] = "";
   const char src[] = "Hello, World!";
-  s21_strncat(dest, src, 20);
-  ck_assert_str_eq(dest, src);
+  s21_strncat(dest1, src, 20);
+  strncat(dest2, src, 19);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_6) {
-  char dest[20] = "123";
+  char dest1[20] = "123";
+  char dest2[20] = "123";
   const char src[] = "456";
-  s21_strncat(dest, src, 2);
-  ck_assert_str_eq(dest, "12345");
+  s21_strncat(dest1, src, 2);
+  strncat(dest2, src, 2);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_7) {
-  char dest[20] = "AaBbCc";
+  char dest1[20] = "AaBbCc";
+  char dest2[20] = "AaBbCc";
   const char src[] = "DdEeFf";
-  s21_strncat(dest, src, 6);
-  ck_assert_str_eq(dest, "AaBbCcDdEe");
+  s21_strncat(dest1, src, 6);
+  strncat(dest2, src, 6);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_8) {
-  char dest[20] = "Special@";
+  char dest1[20] = "Special@";
+  char dest2[20] = "Special@";
   const char src[] = "Characters!";
-  s21_strncat(dest, src, 20);
-  ck_assert_str_eq(dest, "Special@Characters!");
+  s21_strncat(dest1, src, 20);
+  strncat(dest2, src, 19);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_9) {
-  char dest[20] = "Line";
+  char dest1[20] = "Line";
+  char dest2[20] = "Line";
   const char src[] = "\nBreak";
-  s21_strncat(dest, src, 6);
-  ck_assert_str_eq(dest, "Line\nBr");
+  s21_strncat(dest1, src, 6);
+  strncat(dest2, src, 6);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncat_10) {
-  char dest[20] = "Hello\t";
+  char dest1[20] = "Hello\t";
+  char dest2[20] = "Hello\t";
   const char src[] = "Tab!";
-  s21_strncat(dest, src, 20);
-  ck_assert_str_eq(dest, "Hello\tTab!");
+  s21_strncat(dest1, src, 20);
+  strncat(dest2, src, 19);
+  ck_assert_str_eq(dest1, dest2);
 }
 END_TEST
 

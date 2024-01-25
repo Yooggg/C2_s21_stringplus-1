@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Обычное положительное целое число
 START_TEST(s21_sprintf_X_1) {
   char result[50];
   unsigned int value = 42;
@@ -14,7 +13,6 @@ START_TEST(s21_sprintf_X_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Ноль
 START_TEST(s21_sprintf_X_2) {
   char result[50];
   unsigned int value = 0;
@@ -28,7 +26,6 @@ START_TEST(s21_sprintf_X_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Максимальное значение для unsigned int
 START_TEST(s21_sprintf_X_3) {
   char result[50];
   unsigned int value = UINT_MAX;
@@ -42,7 +39,6 @@ START_TEST(s21_sprintf_X_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Случай, когда значение представляется буквами
 START_TEST(s21_sprintf_X_4) {
   char result[50];
   unsigned int value = 12345;
@@ -56,7 +52,6 @@ START_TEST(s21_sprintf_X_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Случай, когда значение представляется спецсимволами
 START_TEST(s21_sprintf_X_5) {
   char result[50];
   unsigned int value = 42;

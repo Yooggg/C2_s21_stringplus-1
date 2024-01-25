@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Поиск существующего символа в строке
 START_TEST(strchr_1) {
   char str1[] = "Hello, World!";
   char search_char = 'W';
@@ -9,7 +8,6 @@ START_TEST(strchr_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Поиск символа, который отсутствует в строке
 START_TEST(strchr_2) {
   char str2[] = "Testing";
   char search_char = 'A';
@@ -18,7 +16,6 @@ START_TEST(strchr_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Поиск нулевого символа в строке
 START_TEST(strchr_3) {
   char str3[] = "String\0with\0null\0characters";
   char search_char = '\0';
@@ -27,7 +24,6 @@ START_TEST(strchr_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Поиск символа за пределами длины строки
 START_TEST(strchr_4) {
   char str4[] = "Short";
   char search_char = 'T';
@@ -36,7 +32,6 @@ START_TEST(strchr_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Поиск символа в пустой строке
 START_TEST(strchr_5) {
   char str5[] = "";
   char search_char = 'A';
@@ -45,7 +40,6 @@ START_TEST(strchr_5) {
 }
 END_TEST
 
-// Тест-кейс 6: Поиск первого вхождения символа 'a' в строке с несколькими 'a'
 START_TEST(strchr_6) {
   char str6[] = "abacabadabacaba";
   char search_char = 'a';
@@ -54,8 +48,6 @@ START_TEST(strchr_6) {
 }
 END_TEST
 
-// Тест-кейс 7: Поиск первого вхождения символа в строке, где символ встречается
-// один раз
 START_TEST(strchr_7) {
   char str7[] = "X";
   char search_char = 'X';
@@ -64,8 +56,6 @@ START_TEST(strchr_7) {
 }
 END_TEST
 
-// Тест-кейс 8: Поиск первого вхождения символа в строке, где символ встречается
-// в начале
 START_TEST(strchr_8) {
   char str8[] = "CommonPrefix123";
   char search_char = 'C';
@@ -74,8 +64,6 @@ START_TEST(strchr_8) {
 }
 END_TEST
 
-// Тест-кейс 9: Поиск первого вхождения символа в строке, где символ встречается
-// в конце
 START_TEST(strchr_9) {
   char str9[] = "End123";
   char search_char = '3';
@@ -84,8 +72,6 @@ START_TEST(strchr_9) {
 }
 END_TEST
 
-// Тест-кейс 10: Поиск первого вхождения символа в строке, где символ не
-// встречается
 START_TEST(strchr_10) {
   char str10[] = "Hello, World!";
   char search_char = 'Z';

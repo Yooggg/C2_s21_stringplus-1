@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1
 START_TEST(s21_sprintf_width_1) {
   char buffer[100];
   int standard_result = sprintf(buffer, "%5d", 42);
@@ -13,7 +12,6 @@ START_TEST(s21_sprintf_width_1) {
 }
 END_TEST
 
-// Тест-кейс 2
 START_TEST(s21_sprintf_width_2) {
   char buffer[100];
   int standard_result = sprintf(buffer, "%-8d", 123);
@@ -26,7 +24,6 @@ START_TEST(s21_sprintf_width_2) {
 }
 END_TEST
 
-// Тест-кейс 3
 START_TEST(s21_sprintf_width_3) {
   char buffer[100];
   int standard_result = sprintf(buffer, "%10s", "Hello");
@@ -39,7 +36,6 @@ START_TEST(s21_sprintf_width_3) {
 }
 END_TEST
 
-// Тест-кейс 4
 START_TEST(s21_sprintf_width_4) {
   char buffer[100];
   int standard_result = sprintf(buffer, "%-15.2f", 3.14);
@@ -52,7 +48,6 @@ START_TEST(s21_sprintf_width_4) {
 }
 END_TEST
 
-// Тест-кейс 5
 START_TEST(s21_sprintf_width_5) {
   char buffer[100];
   int standard_result = sprintf(buffer, "%*c", 8, 'A');

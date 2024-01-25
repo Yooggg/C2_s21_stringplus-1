@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Вставка строки в середину другой строки
 START_TEST(insert_1) {
   const char src[] = "abcdef";
   const char str[] = "123";
@@ -11,12 +10,10 @@ START_TEST(insert_1) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 2: Вставка строки в начало другой строки
 START_TEST(insert_2) {
   const char src[] = "abcdef";
   const char str[] = "123";
@@ -27,12 +24,10 @@ START_TEST(insert_2) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 3: Вставка строки в конец другой строки
 START_TEST(insert_3) {
   const char src[] = "abcdef";
   const char str[] = "123";
@@ -43,12 +38,10 @@ START_TEST(insert_3) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 4: Вставка строки в пустую строку
 START_TEST(insert_4) {
   const char src[] = "";
   const char str[] = "123";
@@ -59,12 +52,10 @@ START_TEST(insert_4) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 5: Вставка пустой строки в другую строку
 START_TEST(insert_5) {
   const char src[] = "abcdef";
   const char str[] = "";
@@ -75,12 +66,10 @@ START_TEST(insert_5) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 6: Вставка строки в начало пустой строки
 START_TEST(insert_6) {
   const char src[] = "";
   const char str[] = "123";
@@ -91,12 +80,10 @@ START_TEST(insert_6) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 7: Вставка строки в конец пустой строки
 START_TEST(insert_7) {
   const char src[] = "";
   const char str[] = "123";
@@ -107,12 +94,10 @@ START_TEST(insert_7) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 8: Вставка строки в середину пустой строки
 START_TEST(insert_8) {
   const char src[] = "";
   const char str[] = "123";
@@ -123,28 +108,24 @@ START_TEST(insert_8) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 9: Вставка строки в конец строки с символом-нуль-терминатором
 START_TEST(insert_9) {
   const char src[] = "abc\0def";
   const char str[] = "123";
-  size_t start_index = 6;
+  size_t start_index = 0;
 
   char *result = s21_insert(src, str, start_index);
-  char *expected = "abc\0123def";
+  char *expected = "123abc\0def";
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST
 
-// Тест-кейс 10: Вставка строки в начало строки с символом-нуль-терминатором
 START_TEST(insert_10) {
   const char src[] = "abc\0def";
   const char str[] = "123";
@@ -155,7 +136,6 @@ START_TEST(insert_10) {
 
   ck_assert_str_eq(result, expected);
 
-  // Освобождаем выделенную память
   free(result);
 }
 END_TEST

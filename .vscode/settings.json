@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "s21_string.h": "c",
+        "string.h": "c",
+        "errno.h": "c",
+        "err.h": "c",
+        "chrono": "c",
+        "functional": "c",
+        "test_string.h": "c",
+        "error_t.h": "c",
+        "fcntl.h": "c",
+        "errno-base.h": "c"
+    }
+}

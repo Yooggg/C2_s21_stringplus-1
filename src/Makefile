@@ -5,9 +5,11 @@
 CC=gcc
 STDFLAGS= -Wall -Werror -Wextra -std=c11
 GCOV_FLAGS= -fprofile-arcs -ftest-coverage
-UBUNTU_FLAGS= -lsubunit -lrt -lpthread -lm
+UBUNTU_FLAGS= -lrt -lpthread -lm
 LIBS= -lcheck
 LDFLAGS= -L/usr/local/lib -I/usr/local/include
+VALGRIND= --tool=memcheck --leak-check=yes
+CLANG= clang-format
 
 # Определение операционной системы
 OS=$(shell uname -s)
@@ -58,9 +60,6 @@ endif
 	genhtml -o test_report ./unit_tests/all_tests_s21.info
 	open ./test_report/index.html
 
-
-
-
 rebuild: clean all
 
 # Цель для очистки всех временных файлов и сгенерированных отчетов
@@ -69,3 +68,11 @@ clean:
 	rm -f all_tests_s21 *.o *.a *.gcno *.gcda unit_tests/*.gc* unit_tests/*.info
 	rm -rf test_report/
 	rm -f s21_*.gcda s21_*.gcno
+
+clang:
+	$(CLANG) -style=Google -n *.[ch]
+	cd unit_tests
+	$(CLANG) -style=Google -n *.[ch]
+
+valgrind:
+	valgrind $(VALGRIND) ./all_tests_s21

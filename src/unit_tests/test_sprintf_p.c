@@ -1,8 +1,5 @@
-#include <math.h>
-
 #include "test_string.h"
 
-// Тест-кейс 1: Указатель на обычную переменную
 START_TEST(s21_sprintf_p_1) {
   char result[50];
   int value = 42;
@@ -17,7 +14,6 @@ START_TEST(s21_sprintf_p_1) {
 }
 END_TEST
 
-// Тест-кейс 2: NULL-указатель
 START_TEST(s21_sprintf_p_2) {
   char result[50];
   void *ptr = NULL;
@@ -28,10 +24,10 @@ START_TEST(s21_sprintf_p_2) {
 
   ck_assert_int_eq(s21_result_length, standard_result);
   ck_assert_str_eq(s21_result, result);
+  free(ptr);
 }
 END_TEST
 
-// Тест-кейс 3: Указатель на функцию
 START_TEST(s21_sprintf_p_3) {
   char result[50];
   double (*func_ptr)(double, double) = pow;
@@ -45,7 +41,6 @@ START_TEST(s21_sprintf_p_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Указатель на структуру
 START_TEST(s21_sprintf_p_4) {
   char result[50];
   struct Sample {
@@ -64,7 +59,6 @@ START_TEST(s21_sprintf_p_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Указатель на массив
 START_TEST(s21_sprintf_p_5) {
   char result[50];
   int array[5];

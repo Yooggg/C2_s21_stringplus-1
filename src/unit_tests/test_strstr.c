@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Поиск подстроки в строке
 START_TEST(strstr_1) {
   char haystack[] = "abcdef";
   char needle[] = "cd";
@@ -9,7 +8,6 @@ START_TEST(strstr_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Поиск подстроки в строке (пустая строка)
 START_TEST(strstr_2) {
   char haystack[] = "";
   char needle[] = "abc";
@@ -18,7 +16,6 @@ START_TEST(strstr_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Поиск подстроки в строке (пустая строка для needle)
 START_TEST(strstr_3) {
   char haystack[] = "abcdef";
   char needle[] = "";
@@ -27,7 +24,6 @@ START_TEST(strstr_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Поиск подстроки в строке (пустые строки)
 START_TEST(strstr_4) {
   char haystack[] = "";
   char needle[] = "";
@@ -36,7 +32,6 @@ START_TEST(strstr_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Поиск подстроки в строке (подстрока не найдена)
 START_TEST(strstr_5) {
   char haystack[] = "abcdef";
   char needle[] = "xyz";
@@ -45,7 +40,6 @@ START_TEST(strstr_5) {
 }
 END_TEST
 
-// Тест-кейс 6: Поиск подстроки в строке (подстрока в начале)
 START_TEST(strstr_6) {
   char haystack[] = "abcdef";
   char needle[] = "abc";
@@ -54,7 +48,6 @@ START_TEST(strstr_6) {
 }
 END_TEST
 
-// Тест-кейс 7: Поиск подстроки в строке (подстрока в конце)
 START_TEST(strstr_7) {
   char haystack[] = "abcdef";
   char needle[] = "def";
@@ -63,7 +56,6 @@ START_TEST(strstr_7) {
 }
 END_TEST
 
-// Тест-кейс 8: Поиск подстроки в строке (подстрока в середине)
 START_TEST(strstr_8) {
   char haystack[] = "abcdef";
   char needle[] = "bcde";
@@ -72,7 +64,6 @@ START_TEST(strstr_8) {
 }
 END_TEST
 
-// Тест-кейс 9: Поиск подстроки в строке (символ - нуль-терминатор)
 START_TEST(strstr_9) {
   char haystack[] = "abcdef";
   char needle[] = "\0";
@@ -81,7 +72,6 @@ START_TEST(strstr_9) {
 }
 END_TEST
 
-// Тест-кейс 10: Поиск подстроки в строке (русские символы)
 START_TEST(strstr_10) {
   char haystack[] = "Привет, мир!";
   char needle[] = "мир";

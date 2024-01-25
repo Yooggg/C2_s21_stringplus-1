@@ -1,6 +1,5 @@
 #include "test_string.h"
 
-// Тест-кейс 1: Поиск существующего символа в строке
 START_TEST(memchr_1) {
   char test1[] = "Hello, World!";
   char search_char = 'W';
@@ -9,7 +8,6 @@ START_TEST(memchr_1) {
 }
 END_TEST
 
-// Тест-кейс 2: Поиск символа в строке, который отсутствует
 START_TEST(memchr_2) {
   char test2[] = "Testing";
   char search_char = 'A';
@@ -18,7 +16,6 @@ START_TEST(memchr_2) {
 }
 END_TEST
 
-// Тест-кейс 3: Поиск нулевого символа в строке
 START_TEST(memchr_3) {
   char test3[] = "String\0with\0null\0characters";
   char search_char = '\0';
@@ -27,7 +24,6 @@ START_TEST(memchr_3) {
 }
 END_TEST
 
-// Тест-кейс 4: Поиск символа за пределами длины строки
 START_TEST(memchr_4) {
   char test4[] = "Short";
   char search_char = 'T';
@@ -36,7 +32,6 @@ START_TEST(memchr_4) {
 }
 END_TEST
 
-// Тест-кейс 5: Поиск символа в пустой строке
 START_TEST(memchr_5) {
   char test5[] = "";
   char search_char = 'A';
@@ -45,7 +40,6 @@ START_TEST(memchr_5) {
 }
 END_TEST
 
-// Тест-кейс 6: Поиск символа в строке, содержащей множество символов
 START_TEST(memchr_6) {
   char test6[] = "abacabadabacaba";
   char search_char = 'd';
@@ -54,7 +48,6 @@ START_TEST(memchr_6) {
 }
 END_TEST
 
-// Тест-кейс 7: Поиск символа, когда длина строки равна 1
 START_TEST(memchr_7) {
   char test7[] = "X";
   char search_char = 'X';
@@ -63,7 +56,6 @@ START_TEST(memchr_7) {
 }
 END_TEST
 
-// Тест-кейс 8: Поиск символа в строке, где символ встречается несколько раз
 START_TEST(memchr_8) {
   char test8[] = "abacabadabacaba";
   char search_char = 'a';
@@ -72,8 +64,6 @@ START_TEST(memchr_8) {
 }
 END_TEST
 
-// Тест-кейс 9: Поиск символа, когда длина строки больше, чем реальное
-// количество символов!!!
 START_TEST(memchr_9) {
   char test9[] = "Short";
   char search_char = 'T';
@@ -82,7 +72,6 @@ START_TEST(memchr_9) {
 }
 END_TEST
 
-// Тест-кейс 10: Поиск символа в строке с использованием нулевой длины
 START_TEST(memchr_10) {
   char test10[] = "Hello";
   char search_char = 'H';

@@ -1,17 +1,25 @@
-#include <string.h>
-
 #include "s21_string.h"
-void *s21_insert(const char *src, const char *str, size_t start_index) {
-  size_t length = s21_strlen(src) + s21_strlen(str) + 1;
-  char *product = (char *)malloc(length);
-  if (start_index > s21_strlen(src)) {
-    return NULL;
-  }
-  strncpy(product, src, start_index);
-  product[start_index] = '\0';
-  strcat(product, str);
-  strcat(product, src + start_index);
-  strncpy((char *)src, product, length);
 
-  return (void *)product;
+void *s21_insert(const char *src, const char *str, s21_size_t start_index) {
+  s21_size_t size_src = s21_strlen(src);
+  s21_size_t size_str = s21_strlen(str);
+  char *inserted = s21_NULL;
+
+  if ((size_str != 0 || size_src != 0) && start_index <= size_src) {
+    s21_size_t i = 0;
+    inserted = calloc(size_src + size_str + 2, 1);
+    if (inserted != s21_NULL) {
+      for (; i < start_index; i++) {
+        inserted[i] = src[i];
+      }
+      int j = 0;
+      for (; i < start_index + size_str; i++, j++) {
+        inserted[i] = str[0 + j];
+      }
+      for (; i < size_src + size_str; i++) {
+        inserted[i] = src[i - size_str];
+      }
+    }
+  }
+  return (void *)inserted;
 }
