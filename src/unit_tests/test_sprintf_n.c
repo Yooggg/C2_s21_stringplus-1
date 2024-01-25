@@ -2,13 +2,13 @@
 
 START_TEST(s21_sprintf_n_1) {
   char buffer[50];
-  int standard_result;
+  int standard_result = 2;
   int value = 42;
   int standard_chars_written =
       sprintf(buffer, "The answer is %d%n", value, &standard_result);
 
   char s21_buffer[50];
-  int s21_result;
+  int s21_result = 2;
   int s21_chars_written =
       s21_sprintf(s21_buffer, "The answer is %d%n", value, &s21_result);
 
@@ -19,13 +19,13 @@ END_TEST
 
 START_TEST(s21_sprintf_n_2) {
   char buffer[50];
-  int standard_result;
+  int standard_result = 4;
   int standard_chars_written = sprintf(buffer, "%n", &standard_result);
   standard_result = standard_chars_written;
 
   char s21_buffer[50];
   int s21_chars_written;
-  int s21_result = 0;
+  int s21_result = 4;
   s21_chars_written = s21_sprintf(s21_buffer, "%n", &s21_result);
 
   ck_assert_int_eq(s21_chars_written, standard_chars_written);
@@ -35,7 +35,7 @@ END_TEST
 
 START_TEST(s21_sprintf_n_3) {
   char buffer[50];
-  int standard_result;
+  int standard_result = 0;
   int standard_chars_written = sprintf(buffer, "Value: %n", &standard_result);
   standard_result = standard_chars_written;
 

@@ -2,7 +2,7 @@
 
 START_TEST(test_memcpy_1) {
   char dest[20];
-  const char src[] = "Hello, World!";
+  char src[] = "Hello, World!";
 
   ck_assert_ptr_eq(s21_memcpy(dest, src, strlen(src) + 1), dest);
   ck_assert_str_eq(dest, src);
@@ -11,7 +11,7 @@ END_TEST
 
 START_TEST(test_memcpy_2) {
   char dest[10];
-  const char src[] = "Hello, World!";
+  char src[] = "Hello, World!";
 
   ck_assert_ptr_eq(s21_memcpy(dest, src, 5), dest);
   dest[5] = '\0';
@@ -21,16 +21,16 @@ END_TEST
 
 START_TEST(test_memcpy_3) {
   char dest[10];
-  const char src[] = "";
+  char src[] = "";
   s21_memcpy(dest, src, 1);
-  ck_assert_ptr_eq(dest, "");
+  ck_assert_str_eq(dest, "");
 }
 END_TEST
 
 START_TEST(test_memcpy_4) {
   char dest[10];
   s21_memcpy(dest, s21_NULL, 1);
-  ck_assert_ptr_eq(dest, "");
+  ck_assert_str_eq(dest, "");
 }
 END_TEST
 
@@ -48,7 +48,7 @@ END_TEST
 
 START_TEST(test_memcpy_7) {
   char dest[10] = "Existing";
-  const char src[] = "";
+  char src[] = "";
 
   ck_assert_ptr_eq(s21_memcpy(dest, src, 1), dest);
   ck_assert_str_eq(dest, "Existing");
@@ -57,7 +57,7 @@ END_TEST
 
 START_TEST(test_memcpy_8) {
   char dest[10] = "Existing";
-  const char src[] = "Hello";
+  char src[] = "Hello";
 
   ck_assert_ptr_eq(s21_memcpy(dest, src, 0), dest);
   ck_assert_str_eq(dest, "Existing");
@@ -66,7 +66,7 @@ END_TEST
 
 START_TEST(test_memcpy_9) {
   char dest[10] = "Existing";
-  const char src[] = "Hello";
+  char src[] = "Hello";
 
   ck_assert_ptr_eq(s21_memcpy(dest + 3, src, 5), dest + 3);
   ck_assert_str_eq(dest, "ExiHello");
@@ -75,7 +75,7 @@ END_TEST
 
 START_TEST(test_memcpy_10) {
   char dest[20] = "Existing";
-  const char src[] = "Hello";
+  char src[] = "Hello";
 
   ck_assert_ptr_eq(s21_memcpy(dest, src, strlen(src)), dest);
   ck_assert_str_eq(dest, "Hello");
@@ -84,7 +84,7 @@ END_TEST
 
 START_TEST(test_memcpy_11) {
   char dest[20] = "Existing";
-  const char src[] = "Hello";
+  char src[] = "Hello";
 
   ck_assert_ptr_eq(s21_memcpy(dest + 3, src, 5), dest + 3);
   ck_assert_str_eq(dest, "ExiHello");
@@ -95,9 +95,9 @@ Suite *memcpy_suite(void) {
   Suite *s;
   TCase *tc_memcpy;
 
-  s = suite_create("memcpy_suite");
+  s = suite_create("MEMCPY_SUITE");
 
-  tc_memcpy = tcase_create("memcpy_tests");
+  tc_memcpy = tcase_create("MEMCPY_TESTS");
 
   tcase_add_test(tc_memcpy, test_memcpy_1);
   tcase_add_test(tc_memcpy, test_memcpy_2);

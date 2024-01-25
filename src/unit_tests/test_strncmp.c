@@ -91,9 +91,9 @@ START_TEST(strcmp_10) {
 END_TEST
 
 Suite *strncmp_suite(void) {
-  Suite *s = suite_create("SUITE_STRCMP");
+  Suite *s = suite_create("SUITE_STRNCMP");
   TCase *tc;
-  tc = tcase_create("TC_STRCMP");
+  tc = tcase_create("TC_STRNCMP");
   tcase_add_test(tc, strcmp_1);
   tcase_add_test(tc, strcmp_2);
   tcase_add_test(tc, strcmp_3);

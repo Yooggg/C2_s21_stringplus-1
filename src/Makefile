@@ -29,7 +29,7 @@ TEST_SRC=$(wildcard $(TEST_C_DIR)/test*.c)
 ALL_C_TEST=$(TEST_C_DIR)all_tests_s21.c $(TEST_SRC)
 
 # Основная цель для сборки всего проекта
-all: gcov_report test s21_string.a
+all: s21_string.a test gcov_report
 
 # Цель для сборки статической библиотеки s21_string.a
 s21_string.a: $(SRC)
@@ -44,7 +44,7 @@ ifeq ($(OS), Darwin)
  else
 	$(CC) $(STDFLAGS) $(LDFLAGS) $(ALL_C_TEST) -o all_tests_s21 $(LIBS) $(UBUNTU_FLAGS) s21_string.a
 endif
-	./all_tests_s21
+
 
 # Цель для создания отчетов по покрытию кода
 gcov_report:
@@ -52,13 +52,13 @@ ifeq ($(OS), Darwin)
 	$(CC) $(STDFLAGS) $(LDFLAGS) $(GCOV_FLAGS) $(ALL_C_SL) $(ALL_C_TEST) -o all_tests_s21 $(LIBS)
  else # Флаги для GNU
 	$(CC) $(STDFLAGS) $(LDFLAGS) $(GCOV_FLAGS) $(ALL_C_SL) $(ALL_C_TEST) -o all_tests_s21 $(LIBS) $(UBUNTU_FLAGS)
-endif 
+endif
 	./all_tests_s21
 	mkdir -p unit_tests
 	mv *.gc* unit_tests
 	lcov -o ./unit_tests/all_tests_s21.info -c -d unit_tests
 	genhtml -o test_report ./unit_tests/all_tests_s21.info
-	open ./test_report/index.html
+
 
 rebuild: clean all
 

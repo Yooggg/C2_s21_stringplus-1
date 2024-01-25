@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define s21_NULL (void *)0
+#define s21_NULL ((void *)0)
 typedef long unsigned s21_size_t;
 
 s21_size_t s21_strlen(const char *str);
